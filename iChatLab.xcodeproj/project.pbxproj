@@ -13,9 +13,12 @@
 		98F919CB2418F35200B71450 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 98F919C92418F35200B71450 /* Main.storyboard */; };
 		98F919CD2418F35300B71450 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 98F919CC2418F35300B71450 /* Assets.xcassets */; };
 		98F919D02418F35300B71450 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 98F919CE2418F35300B71450 /* LaunchScreen.storyboard */; };
+		98F919D82418F3DD00B71450 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 98F919D72418F3DD00B71450 /* GoogleService-Info.plist */; };
+		BC300E6374D4EFFEB98098E2 /* Pods_iChatLab.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D98E0ED4EC5882603FE63FE3 /* Pods_iChatLab.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		677C4494A21AE6FFFD6CF0E0 /* Pods-iChatLab.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iChatLab.debug.xcconfig"; path = "Target Support Files/Pods-iChatLab/Pods-iChatLab.debug.xcconfig"; sourceTree = "<group>"; };
 		98F919C02418F35200B71450 /* iChatLab.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iChatLab.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		98F919C32418F35200B71450 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		98F919C52418F35200B71450 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -24,6 +27,9 @@
 		98F919CC2418F35300B71450 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		98F919CF2418F35300B71450 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		98F919D12418F35300B71450 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		98F919D72418F3DD00B71450 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		9D644123A62ACB8D1C652DD8 /* Pods-iChatLab.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iChatLab.release.xcconfig"; path = "Target Support Files/Pods-iChatLab/Pods-iChatLab.release.xcconfig"; sourceTree = "<group>"; };
+		D98E0ED4EC5882603FE63FE3 /* Pods_iChatLab.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iChatLab.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,17 +37,30 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BC300E6374D4EFFEB98098E2 /* Pods_iChatLab.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		08515FA55B8C1EF679D6103B /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				677C4494A21AE6FFFD6CF0E0 /* Pods-iChatLab.debug.xcconfig */,
+				9D644123A62ACB8D1C652DD8 /* Pods-iChatLab.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		98F919B72418F35100B71450 = {
 			isa = PBXGroup;
 			children = (
 				98F919C22418F35200B71450 /* iChatLab */,
 				98F919C12418F35200B71450 /* Products */,
+				08515FA55B8C1EF679D6103B /* Pods */,
+				9CE9792519C41ECE6EFF460A /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -63,8 +82,17 @@
 				98F919CC2418F35300B71450 /* Assets.xcassets */,
 				98F919CE2418F35300B71450 /* LaunchScreen.storyboard */,
 				98F919D12418F35300B71450 /* Info.plist */,
+				98F919D72418F3DD00B71450 /* GoogleService-Info.plist */,
 			);
 			path = iChatLab;
+			sourceTree = "<group>";
+		};
+		9CE9792519C41ECE6EFF460A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D98E0ED4EC5882603FE63FE3 /* Pods_iChatLab.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -74,9 +102,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 98F919D42418F35300B71450 /* Build configuration list for PBXNativeTarget "iChatLab" */;
 			buildPhases = (
+				34672D0753723648ADCD5EA8 /* [CP] Check Pods Manifest.lock */,
 				98F919BC2418F35200B71450 /* Sources */,
 				98F919BD2418F35200B71450 /* Frameworks */,
 				98F919BE2418F35200B71450 /* Resources */,
+				09BF99E06C0116902DE0566F /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -126,12 +156,55 @@
 			buildActionMask = 2147483647;
 			files = (
 				98F919D02418F35300B71450 /* LaunchScreen.storyboard in Resources */,
+				98F919D82418F3DD00B71450 /* GoogleService-Info.plist in Resources */,
 				98F919CD2418F35300B71450 /* Assets.xcassets in Resources */,
 				98F919CB2418F35200B71450 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		09BF99E06C0116902DE0566F /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-iChatLab/Pods-iChatLab-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-iChatLab/Pods-iChatLab-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-iChatLab/Pods-iChatLab-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		34672D0753723648ADCD5EA8 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-iChatLab-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		98F919BC2418F35200B71450 /* Sources */ = {
@@ -282,6 +355,7 @@
 		};
 		98F919D52418F35300B71450 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 677C4494A21AE6FFFD6CF0E0 /* Pods-iChatLab.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -300,6 +374,7 @@
 		};
 		98F919D62418F35300B71450 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9D644123A62ACB8D1C652DD8 /* Pods-iChatLab.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;

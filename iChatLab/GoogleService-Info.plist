@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>148009941019-etp87nblk2msdosk46qrtg5c4tk36e7s.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.148009941019-etp87nblk2msdosk46qrtg5c4tk36e7s</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCp1XtsvDsvn6D9aEAF-l4tdEODLyJu7U8</string>
+	<key>GCM_SENDER_ID</key>
+	<string>148009941019</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>hnluong.iChatLab</string>
+	<key>PROJECT_ID</key>
+	<string>ichatlab</string>
+	<key>STORAGE_BUCKET</key>
+	<string>ichatlab.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:148009941019:ios:42daa77a3a0a5bc2d9a0be</string>
+	<key>DATABASE_URL</key>
+	<string>https://ichatlab.firebaseio.com</string>
+</dict>
+</plist>

@@ -3,13 +3,29 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		984C1D4D242371BB00062791 /* UISegmentedControl+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984C1D4C242371BB00062791 /* UISegmentedControl+Ext.swift */; };
+		984C1D4F242377B400062791 /* UIImageView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984C1D4E242377B400062791 /* UIImageView+Ext.swift */; };
+		984CC662241AFB9100933D4C /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984CC661241AFB9100933D4C /* User.swift */; };
+		984CC664241B008300933D4C /* DatabaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984CC663241B008300933D4C /* DatabaseService.swift */; };
+		984CC666241B0B6500933D4C /* Date+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984CC665241B0B6500933D4C /* Date+Ext.swift */; };
+		984CE0B1241C8B8C0057AC92 /* Notification+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984CE0B0241C8B8C0057AC92 /* Notification+Ext.swift */; };
+		9850D76B2420AD6F005DBE14 /* UserTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9850D76A2420AD6F005DBE14 /* UserTableViewController.swift */; };
+		985282A0241A28C6008CA4B3 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9852829F241A28C6008CA4B3 /* Constants.swift */; };
+		985282A9241A39A4008CA4B3 /* FinishedRegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985282A8241A39A4008CA4B3 /* FinishedRegisterViewController.swift */; };
+		9854C4FE2420843100634E93 /* UserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9854C4FD2420843100634E93 /* UserTableViewCell.swift */; };
+		98561670241F8A3D00AE60AA /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9856166F241F8A3D00AE60AA /* SettingsTableViewController.swift */; };
+		98BB7A3A2422A4C50059581F /* UIButton+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98BB7A392422A4C50059581F /* UIButton+Ext.swift */; };
+		98BB7A3C2422A8840059581F /* UITextField+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98BB7A3B2422A8840059581F /* UITextField+Ext.swift */; };
+		98BB7A3E2422AE1B0059581F /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98BB7A3D2422AE1B0059581F /* LoginViewController.swift */; };
+		98BB7A402422AEA30059581F /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98BB7A3F2422AEA30059581F /* WelcomeViewController.swift */; };
+		98BB7A422422B0810059581F /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98BB7A412422B0810059581F /* Common.swift */; };
+		98C24EAC2419E627005C2D88 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C24EAB2419E627005C2D88 /* RegisterViewController.swift */; };
 		98F919C42418F35200B71450 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98F919C32418F35200B71450 /* AppDelegate.swift */; };
 		98F919C62418F35200B71450 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98F919C52418F35200B71450 /* SceneDelegate.swift */; };
-		98F919C82418F35200B71450 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98F919C72418F35200B71450 /* ViewController.swift */; };
 		98F919CB2418F35200B71450 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 98F919C92418F35200B71450 /* Main.storyboard */; };
 		98F919CD2418F35300B71450 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 98F919CC2418F35300B71450 /* Assets.xcassets */; };
 		98F919D02418F35300B71450 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 98F919CE2418F35300B71450 /* LaunchScreen.storyboard */; };
@@ -19,10 +35,26 @@
 
 /* Begin PBXFileReference section */
 		677C4494A21AE6FFFD6CF0E0 /* Pods-iChatLab.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iChatLab.debug.xcconfig"; path = "Target Support Files/Pods-iChatLab/Pods-iChatLab.debug.xcconfig"; sourceTree = "<group>"; };
+		984C1D4C242371BB00062791 /* UISegmentedControl+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UISegmentedControl+Ext.swift"; sourceTree = "<group>"; };
+		984C1D4E242377B400062791 /* UIImageView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Ext.swift"; sourceTree = "<group>"; };
+		984CC661241AFB9100933D4C /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		984CC663241B008300933D4C /* DatabaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseService.swift; sourceTree = "<group>"; };
+		984CC665241B0B6500933D4C /* Date+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Ext.swift"; sourceTree = "<group>"; };
+		984CE0B0241C8B8C0057AC92 /* Notification+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+Ext.swift"; sourceTree = "<group>"; };
+		9850D76A2420AD6F005DBE14 /* UserTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTableViewController.swift; sourceTree = "<group>"; };
+		9852829F241A28C6008CA4B3 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		985282A8241A39A4008CA4B3 /* FinishedRegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinishedRegisterViewController.swift; sourceTree = "<group>"; };
+		9854C4FD2420843100634E93 /* UserTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTableViewCell.swift; sourceTree = "<group>"; };
+		9856166F241F8A3D00AE60AA /* SettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
+		98BB7A392422A4C50059581F /* UIButton+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Ext.swift"; sourceTree = "<group>"; };
+		98BB7A3B2422A8840059581F /* UITextField+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Ext.swift"; sourceTree = "<group>"; };
+		98BB7A3D2422AE1B0059581F /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		98BB7A3F2422AEA30059581F /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
+		98BB7A412422B0810059581F /* Common.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
+		98C24EAB2419E627005C2D88 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		98F919C02418F35200B71450 /* iChatLab.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iChatLab.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		98F919C32418F35200B71450 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		98F919C52418F35200B71450 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		98F919C72418F35200B71450 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		98F919CA2418F35200B71450 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		98F919CC2418F35300B71450 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		98F919CF2418F35300B71450 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -50,8 +82,74 @@
 				677C4494A21AE6FFFD6CF0E0 /* Pods-iChatLab.debug.xcconfig */,
 				9D644123A62ACB8D1C652DD8 /* Pods-iChatLab.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		984CC660241AFB7100933D4C /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				984CC661241AFB9100933D4C /* User.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		9852829E241A28B0008CA4B3 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				9852829F241A28C6008CA4B3 /* Constants.swift */,
+				98BB7A412422B0810059581F /* Common.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		985282A1241A2B57008CA4B3 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				984CC663241B008300933D4C /* DatabaseService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		98BB7A432422B8EC0059581F /* Authentication */ = {
+			isa = PBXGroup;
+			children = (
+				98BB7A3D2422AE1B0059581F /* LoginViewController.swift */,
+				98C24EAB2419E627005C2D88 /* RegisterViewController.swift */,
+				985282A8241A39A4008CA4B3 /* FinishedRegisterViewController.swift */,
+			);
+			path = Authentication;
+			sourceTree = "<group>";
+		};
+		98C24EAA2419E613005C2D88 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				98BB7A432422B8EC0059581F /* Authentication */,
+				9856166F241F8A3D00AE60AA /* SettingsTableViewController.swift */,
+				9850D76A2420AD6F005DBE14 /* UserTableViewController.swift */,
+				98BB7A3F2422AEA30059581F /* WelcomeViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		98C24EB02419E8FA005C2D88 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				9854C4FD2420843100634E93 /* UserTableViewCell.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		98C24EB32419EBBA005C2D88 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				984CC665241B0B6500933D4C /* Date+Ext.swift */,
+				984CE0B0241C8B8C0057AC92 /* Notification+Ext.swift */,
+				98BB7A392422A4C50059581F /* UIButton+Ext.swift */,
+				98BB7A3B2422A8840059581F /* UITextField+Ext.swift */,
+				984C1D4C242371BB00062791 /* UISegmentedControl+Ext.swift */,
+				984C1D4E242377B400062791 /* UIImageView+Ext.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		98F919B72418F35100B71450 = {
@@ -77,7 +175,12 @@
 			children = (
 				98F919C32418F35200B71450 /* AppDelegate.swift */,
 				98F919C52418F35200B71450 /* SceneDelegate.swift */,
-				98F919C72418F35200B71450 /* ViewController.swift */,
+				984CC660241AFB7100933D4C /* Models */,
+				985282A1241A2B57008CA4B3 /* Services */,
+				9852829E241A28B0008CA4B3 /* Utilities */,
+				98C24EB32419EBBA005C2D88 /* Extensions */,
+				98C24EB02419E8FA005C2D88 /* Views */,
+				98C24EAA2419E613005C2D88 /* Controllers */,
 				98F919C92418F35200B71450 /* Main.storyboard */,
 				98F919CC2418F35300B71450 /* Assets.xcassets */,
 				98F919CE2418F35300B71450 /* LaunchScreen.storyboard */,
@@ -211,9 +314,25 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				98F919C82418F35200B71450 /* ViewController.swift in Sources */,
+				984CC664241B008300933D4C /* DatabaseService.swift in Sources */,
+				98561670241F8A3D00AE60AA /* SettingsTableViewController.swift in Sources */,
+				9854C4FE2420843100634E93 /* UserTableViewCell.swift in Sources */,
+				98BB7A3C2422A8840059581F /* UITextField+Ext.swift in Sources */,
+				98BB7A422422B0810059581F /* Common.swift in Sources */,
+				98BB7A3A2422A4C50059581F /* UIButton+Ext.swift in Sources */,
+				984C1D4D242371BB00062791 /* UISegmentedControl+Ext.swift in Sources */,
+				98BB7A402422AEA30059581F /* WelcomeViewController.swift in Sources */,
+				985282A0241A28C6008CA4B3 /* Constants.swift in Sources */,
+				98C24EAC2419E627005C2D88 /* RegisterViewController.swift in Sources */,
+				984CE0B1241C8B8C0057AC92 /* Notification+Ext.swift in Sources */,
 				98F919C42418F35200B71450 /* AppDelegate.swift in Sources */,
+				985282A9241A39A4008CA4B3 /* FinishedRegisterViewController.swift in Sources */,
+				9850D76B2420AD6F005DBE14 /* UserTableViewController.swift in Sources */,
+				98BB7A3E2422AE1B0059581F /* LoginViewController.swift in Sources */,
+				984C1D4F242377B400062791 /* UIImageView+Ext.swift in Sources */,
 				98F919C62418F35200B71450 /* SceneDelegate.swift in Sources */,
+				984CC662241AFB9100933D4C /* User.swift in Sources */,
+				984CC666241B0B6500933D4C /* Date+Ext.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

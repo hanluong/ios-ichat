@@ -40,7 +40,7 @@ class SettingsTableViewController: UITableViewController {
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "settingCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: Storyboard.Identifier.Cell.setting, for: indexPath)
 
         // Configure the cell...
 
@@ -95,6 +95,6 @@ class SettingsTableViewController: UITableViewController {
 
     // MARK: - Helpers function
     private func showLoginView() {
-        present(Storyboard.welcomeView, animated: true, completion: nil)
+        ViewPresenter.changeRootView(by: Storyboard.welcomeView)
     }
 }

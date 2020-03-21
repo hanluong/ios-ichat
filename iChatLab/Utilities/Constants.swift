@@ -15,7 +15,7 @@ public let userDefaults = UserDefaults.standard
 struct Storyboard {
 
     static let mainView: UIViewController = {
-        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: Storyboard.ID.mainView) as! UITabBarController
+         let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: Storyboard.ID.mainView) as! UITabBarController
         vc.modalPresentationStyle = .fullScreen
         return vc
     }()
@@ -26,10 +26,17 @@ struct Storyboard {
         return vc
     }()
     
+    static let profileView: UIViewController = {
+        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: Storyboard.ID.profileView) as! UITableViewController
+        vc.modalPresentationStyle = .fullScreen
+        return vc
+    }()
+    
     
     struct ID {
         static let mainView = "mainView"
         static let welcomeView = "welcomeView"
+        static let profileView = "profileView"
     }
     
     struct Identifier {

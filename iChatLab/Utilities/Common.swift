@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 class Common {
-    static func generateImageFromUserName(firstName: String, lastName: String, withBlock: @escaping (_ image: UIImage) -> Void) {
+    class func generateImageFromUserName(firstName: String, lastName: String, withBlock: @escaping (_ image: UIImage) -> Void) {
         let imgFromStr = firstName.first!.uppercased() + lastName.first!.uppercased()
         let lblNameInit = UILabel()
         lblNameInit.frame.size = CGSize(width: 100, height: 100)
@@ -28,7 +28,7 @@ class Common {
         withBlock(img!)
     }
 
-    static func imageFromdata(imageData: String, withBlock: @escaping (_ image: UIImage?) -> Void) {
+    class func imageFromdata(imageData: String, withBlock: @escaping (_ image: UIImage?) -> Void) {
         var image: UIImage?
         let decodedImageData = NSData(base64Encoded: imageData, options: .init(rawValue: 0))
         image = UIImage(data: decodedImageData! as Data)

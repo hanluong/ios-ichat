@@ -76,7 +76,7 @@ class FinishedRegisterViewController: UIViewController {
         dbService.registerUserWith(email: email, password: password) { (error) in
             if let error = error {
                 ProgressHUD.dismiss()
-                ProgressHUD.showError(error.localizedDescription)
+                ProgressHUD.showError(error.localizedDescription, interaction: true)
                 return
             }
             
@@ -112,7 +112,7 @@ class FinishedRegisterViewController: UIViewController {
         // - Goto app
         dbService.updateCurrentUserInFirestore(withValue: withValue) { error in
             if let error = error {
-                    ProgressHUD.showError(error.localizedDescription)
+                ProgressHUD.showError(error.localizedDescription)
                 return
             }
             self.gotoApp()
@@ -124,7 +124,7 @@ class FinishedRegisterViewController: UIViewController {
         dismissKeyboard()
         clearAllTextFields()
         
-        present(Storyboard.mainView, animated: true, completion: nil)
+        ViewPresenter.changeRootView(by: Storyboard.mainView)
     }
     
     private func clearAllTextFields() {

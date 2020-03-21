@@ -41,8 +41,8 @@ class LoginViewController: UIViewController {
                 ProgressHUD.showError(error.localizedDescription)
                 return
             }
+            self.gotoApp()
         }
-        self.gotoApp()
     }
     
     private func gotoApp() {
@@ -51,7 +51,7 @@ class LoginViewController: UIViewController {
         self.dismissKeyboard()
         
         // TODO: gotoAPP
-        self.present(Storyboard.mainView, animated: true, completion: nil)
+        ViewPresenter.changeRootView(by: Storyboard.mainView)
     }
     
     private func clearAllTextFields() {

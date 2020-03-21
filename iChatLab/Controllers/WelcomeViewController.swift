@@ -11,7 +11,6 @@ import UIKit
 class WelcomeViewController: UIViewController {
 
     // MARK: - IBOutlets
-    
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var registerButton: UIButton!
     
@@ -26,4 +25,6 @@ class WelcomeViewController: UIViewController {
         loginButton.styleFilledButton()
         registerButton.styleHollowButton()
     }
+    
+    @IBAction func unwindToWelcome(_ sender: UIStoryboardSegue){}
 }

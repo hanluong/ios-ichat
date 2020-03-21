@@ -8,8 +8,16 @@
 
 import UIKit
 
+protocol UserTableViewCellDelegate {
+    func didTapAvatarImage(at indexPath: IndexPath)
+}
+
 class UserTableViewCell: UITableViewCell {
 
+    // MARK: - Vars
+    var indexPath: IndexPath!
+    var delegate: UserTableViewCellDelegate?
+    
     // MARK: - IDOutlets
     @IBOutlet weak var avatarImageView: UIImageView!
     @IBOutlet weak var userNameLabel: UILabel!
@@ -22,21 +30,29 @@ class UserTableViewCell: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
     }
     
     private func setupUI() {
         avatarImageView.styleImageView()
+        
+        let tapOnAvatarImage = UITapGestureRecognizer(target: self, action: #selector(didTapOnImage))
+        avatarImageView.isUserInteractionEnabled = true
+        avatarImageView.addGestureRecognizer(tapOnAvatarImage)
     }
     
-    func configureUserCell(with user: User) {
+    func configureUserCell(with user: User, indexPath: IndexPath) {
+        self.indexPath = indexPath
         Common.imageFromdata(imageData: user.avatar, withBlock: { (image) in
             if let image = image {
                 self.avatarImageView.image = image
             }
         })
+        
         self.userNameLabel.text = user.fullName
     }
-
+    
+    @objc func didTapOnImage() {
+        print("user tapped at [\(self.indexPath.row),\(self.indexPath.section)]")
+        delegate?.didTapAvatarImage(at: self.indexPath)
+    }
 }

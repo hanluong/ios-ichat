@@ -69,9 +69,9 @@ class RegisterViewController: UIViewController {
     
     // MARK: - Helpers function
     private func registerUser() {
-        self.clearAllTextFields()
         self.dismissKeyboard()
         performSegue(withIdentifier: Storyboard.Identifier.Segue.goTiFinishedRegisterVC, sender: nil)
+        self.clearAllTextFields()
     }
     
     private func clearAllTextFields() {

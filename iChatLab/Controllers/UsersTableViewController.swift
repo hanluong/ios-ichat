@@ -1,5 +1,5 @@
 //
-//  UserTableViewController.swift
+//  UsersTableViewController.swift
 //  iChatLab
 //
 //  Created by Han Luong on 3/17/20.
@@ -10,7 +10,7 @@ import UIKit
 import Firebase
 import ProgressHUD
 
-class UserTableViewController: UITableViewController {
+class UsersTableViewController: UITableViewController {
     // MARK: - Vars
     private let dbService = DatabaseService.instance
     
@@ -34,6 +34,7 @@ class UserTableViewController: UITableViewController {
         self.navigationItem.largeTitleDisplayMode = .never
         self.navigationItem.searchController = searchController
         searchController.searchResultsUpdater = self
+        searchController.obscuresBackgroundDuringPresentation = false
         definesPresentationContext = true
         
         self.setupUI()
@@ -148,7 +149,8 @@ class UserTableViewController: UITableViewController {
             let users = self.allUsersGrouped[self.sectionTitleList[indexPath.section]]
             user = users![indexPath.row]
         }
-        cell.configureUserCell(with: user)
+        cell.delegate = self
+        cell.configureUserCell(with: user, indexPath: indexPath)
         
         return cell
     }
@@ -164,7 +166,14 @@ class UserTableViewController: UITableViewController {
     
 }
 
-extension UserTableViewController: UISearchResultsUpdating {
+extension UsersTableViewController: UserTableViewCellDelegate {
+    func didTapAvatarImage(at indexPath: IndexPath) {
+        print("Tapped AAAA")
+    }
+    
+}
+
+extension UsersTableViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         self.filteredUsers = self.allUsers.filter({ (user) -> Bool in
             return user.firstName.lowercased().contains(searchController.searchBar.text!.lowercased())

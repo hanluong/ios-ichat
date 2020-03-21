@@ -9,7 +9,7 @@
 import Foundation
 import Firebase
 
-class User {
+struct User {
     let objectId: String
     var pushId: String?
     
@@ -167,11 +167,11 @@ class User {
         ]
     }
     
-    class func currentId() -> String {
+    static func currentId() -> String {
         return Auth.auth().currentUser!.uid
     }
     
-    class func currentUser() -> User? {
+    static func currentUser() -> User? {
         if Auth.auth().currentUser != nil {
             if let userInfoDict = userDefaults.object(forKey: kCURRENT_USER) {
                 return User(dictionary: userInfoDict as! [String:Any])

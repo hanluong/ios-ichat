@@ -70,9 +70,9 @@ class UsersTableViewController: UITableViewController {
         var query: Query!
         switch filter {
         case kCITY:
-            query = reference(.User).whereField(kCITY, isEqualTo: User.currentUser()!.city).order(by: kFIRST_NAME, descending: false)
+            query = reference(.User).whereField(kCITY, isEqualTo: dbService.currentUser()!.city).order(by: kFIRST_NAME, descending: false)
         case kCOUNTRY:
-            query = reference(.User).whereField(kCOUNTRY, isEqualTo: User.currentUser()!.country).order(by: kFIRST_NAME, descending: false)
+            query = reference(.User).whereField(kCOUNTRY, isEqualTo: dbService.currentUser()!.country).order(by: kFIRST_NAME, descending: false)
         default:
             query = reference(.User).order(by: kFIRST_NAME, descending: false)
         }
@@ -92,7 +92,7 @@ class UsersTableViewController: UITableViewController {
             if !snapshot.isEmpty {
                 self.allUsers = snapshot.documents.compactMap { document in
                     let user = User(dictionary: document.data() as [String:Any])
-                    if User.currentId() != user.objectId {
+                    if self.dbService.currentId() != user.objectId {
                         return user
                     }
                     return nil
@@ -168,7 +168,16 @@ class UsersTableViewController: UITableViewController {
 
 extension UsersTableViewController: UserTableViewCellDelegate {
     func didTapAvatarImage(at indexPath: IndexPath) {
-        print("Tapped AAAA")
+        let selectedUser: User!
+        if isUsingSearchController() {
+            selectedUser = self.filteredUsers[indexPath.row]
+        } else {
+            let selectedTitle = self.sectionTitleList[indexPath.section]
+            selectedUser = self.allUsersGrouped[selectedTitle]![indexPath.row]
+        }
+        let vc = Storyboard.profileView
+        vc.user = selectedUser
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
 }

@@ -20,14 +20,14 @@ struct Storyboard {
         return vc
     }()
     
-    static let welcomeView: UIViewController = {
-        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: Storyboard.ID.welcomeView)
+    static let welcomeView: WelcomeViewController = {
+        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: Storyboard.ID.welcomeView) as! WelcomeViewController
         vc.modalPresentationStyle = .fullScreen
         return vc
     }()
     
-    static let profileView: UIViewController = {
-        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: Storyboard.ID.profileView) as! UITableViewController
+    static let profileView: ProfileTableViewController = {
+        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: Storyboard.ID.profileView) as! ProfileTableViewController
         vc.modalPresentationStyle = .fullScreen
         return vc
     }()

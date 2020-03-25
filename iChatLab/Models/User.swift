@@ -166,18 +166,5 @@ struct User {
             kBLOCKED_USER_ID: self.blockedUsers
         ]
     }
-    
-    static func currentId() -> String {
-        return Auth.auth().currentUser!.uid
-    }
-    
-    static func currentUser() -> User? {
-        if Auth.auth().currentUser != nil {
-            if let userInfoDict = userDefaults.object(forKey: kCURRENT_USER) {
-                return User(dictionary: userInfoDict as! [String:Any])
-            }
-        }
-        return nil
-    }
 }
 

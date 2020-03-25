@@ -52,7 +52,6 @@ class UserTableViewCell: UITableViewCell {
     }
     
     @objc func didTapOnImage() {
-        print("user tapped at [\(self.indexPath.row),\(self.indexPath.section)]")
         delegate?.didTapAvatarImage(at: self.indexPath)
     }
 }

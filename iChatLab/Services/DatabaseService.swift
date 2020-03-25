@@ -25,6 +25,20 @@ func reference(_ collectionReference: FCollectionReference) -> CollectionReferen
 class DatabaseService {
     static let instance = DatabaseService()
     
+    
+    func currentId() -> String {
+        return Auth.auth().currentUser!.uid
+    }
+    
+    func currentUser() -> User? {
+        if Auth.auth().currentUser != nil {
+            if let userInfoDict = userDefaults.object(forKey: kCURRENT_USER) {
+                return User(dictionary: userInfoDict as! [String:Any])
+            }
+        }
+        return nil
+    }
+    
     func loginUserWith(email: String, password: String, completion: @escaping (_ error: Error?) -> Void) {
         Auth.auth().signIn(withEmail: email, password: password) { (authDataResult, error) in
             if let error = error {
@@ -39,7 +53,7 @@ class DatabaseService {
                     }
                     
                     // Notification user did login
-                    NotificationCenter.default.post(name: .userDidLoginNotif, object: nil, userInfo: [kUSER_ID: User.currentId()])
+                    NotificationCenter.default.post(name: .userDidLoginNotif, object: nil, userInfo: [kUSER_ID: self.currentId()])
                 }
             }
             completion(error)
@@ -60,7 +74,7 @@ class DatabaseService {
     }
     
     func fetchCurrentUserFromFirestore(userId: String, completion: @escaping (_ error: Error?) -> Void) {
-        reference(.User).document(User.currentId()).getDocument { (snapshot, error) in
+        reference(.User).document(currentId()).getDocument { (snapshot, error) in
             if let error = error {
                 print(error.localizedDescription)
                 completion(error)
@@ -94,7 +108,7 @@ class DatabaseService {
                 self.saveUserInFirestore(user)
                 
                 // Notification user did login
-                NotificationCenter.default.post(name: .userDidLoginNotif, object: nil, userInfo: [kUSER_ID: User.currentId()])
+                NotificationCenter.default.post(name: .userDidLoginNotif, object: nil, userInfo: [kUSER_ID: self.currentId()])
             }
             
             completion(error)

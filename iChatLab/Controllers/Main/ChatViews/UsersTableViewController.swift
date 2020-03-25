@@ -163,6 +163,7 @@ class UsersTableViewController: UITableViewController {
     override func sectionIndexTitles(for tableView: UITableView) -> [String]? {
         return isUsingSearchController() ? nil : self.sectionTitleList
     }
+
     
 }
 

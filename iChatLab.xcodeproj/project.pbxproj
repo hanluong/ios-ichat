@@ -137,11 +137,7 @@
 			children = (
 				98BB7A3F2422AEA30059581F /* WelcomeViewController.swift */,
 				98BB7A432422B8EC0059581F /* Authentication */,
-				9856166F241F8A3D00AE60AA /* SettingsTableViewController.swift */,
-				9850D76A2420AD6F005DBE14 /* UsersTableViewController.swift */,
-				984C1D5024237D2900062791 /* ChatViewController.swift */,
-				984A991424285A9E00FDB301 /* ProfileTableViewController.swift */,
-				984E4BAD242B38960061F3F1 /* CallViewController.swift */,
+				98F7CBFD242B4474003CA84C /* Main */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -165,6 +161,26 @@
 				984C1D4E242377B400062791 /* UIImageView+Ext.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		98F7CBFD242B4474003CA84C /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				9856166F241F8A3D00AE60AA /* SettingsTableViewController.swift */,
+				984E4BAD242B38960061F3F1 /* CallViewController.swift */,
+				984C1D5024237D2900062791 /* ChatViewController.swift */,
+				98F7CBFE242B44A5003CA84C /* ChatViews */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		98F7CBFE242B44A5003CA84C /* ChatViews */ = {
+			isa = PBXGroup;
+			children = (
+				9850D76A2420AD6F005DBE14 /* UsersTableViewController.swift */,
+				984A991424285A9E00FDB301 /* ProfileTableViewController.swift */,
+			);
+			path = ChatViews;
 			sourceTree = "<group>";
 		};
 		98F919B72418F35100B71450 = {

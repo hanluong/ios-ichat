@@ -138,7 +138,6 @@ class UsersTableViewController: UITableViewController {
         return isUsingSearchController() ? self.filteredUsers.count : self.allUsersGrouped[self.sectionTitleList[section]]!.count
     }
     
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: Storyboard.Identifier.Cell.user, for: indexPath) as? UserTableViewCell else { fatalError() }
         
@@ -163,7 +162,16 @@ class UsersTableViewController: UITableViewController {
     override func sectionIndexTitles(for tableView: UITableView) -> [String]? {
         return isUsingSearchController() ? nil : self.sectionTitleList
     }
-
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        
+        let chattingVC = ChattingViewController()
+        chattingVC.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(chattingVC, animated: true)
+    }
+    
     
 }
 

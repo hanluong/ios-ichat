@@ -29,6 +29,7 @@
 		98BB7A402422AEA30059581F /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98BB7A3F2422AEA30059581F /* WelcomeViewController.swift */; };
 		98BB7A422422B0810059581F /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98BB7A412422B0810059581F /* Common.swift */; };
 		98C24EAC2419E627005C2D88 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C24EAB2419E627005C2D88 /* RegisterViewController.swift */; };
+		98F7CC00242B488E003CA84C /* ChattingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98F7CBFF242B488E003CA84C /* ChattingViewController.swift */; };
 		98F919C42418F35200B71450 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98F919C32418F35200B71450 /* AppDelegate.swift */; };
 		98F919C62418F35200B71450 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98F919C52418F35200B71450 /* SceneDelegate.swift */; };
 		98F919CB2418F35200B71450 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 98F919C92418F35200B71450 /* Main.storyboard */; };
@@ -62,6 +63,7 @@
 		98BB7A3F2422AEA30059581F /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		98BB7A412422B0810059581F /* Common.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
 		98C24EAB2419E627005C2D88 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
+		98F7CBFF242B488E003CA84C /* ChattingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingViewController.swift; sourceTree = "<group>"; };
 		98F919C02418F35200B71450 /* iChatLab.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iChatLab.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		98F919C32418F35200B71450 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		98F919C52418F35200B71450 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -179,6 +181,7 @@
 			children = (
 				9850D76A2420AD6F005DBE14 /* UsersTableViewController.swift */,
 				984A991424285A9E00FDB301 /* ProfileTableViewController.swift */,
+				98F7CBFF242B488E003CA84C /* ChattingViewController.swift */,
 			);
 			path = ChatViews;
 			sourceTree = "<group>";
@@ -361,6 +364,7 @@
 				98F919C42418F35200B71450 /* AppDelegate.swift in Sources */,
 				985282A9241A39A4008CA4B3 /* FinishedRegisterViewController.swift in Sources */,
 				9850D76B2420AD6F005DBE14 /* UsersTableViewController.swift in Sources */,
+				98F7CC00242B488E003CA84C /* ChattingViewController.swift in Sources */,
 				98BB7A3E2422AE1B0059581F /* LoginViewController.swift in Sources */,
 				984C1D4F242377B400062791 /* UIImageView+Ext.swift in Sources */,
 				984D615C2429AE3D00320762 /* Recent.swift in Sources */,

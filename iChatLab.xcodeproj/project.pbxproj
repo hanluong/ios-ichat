@@ -8,9 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		984A991524285A9E00FDB301 /* ProfileTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984A991424285A9E00FDB301 /* ProfileTableViewController.swift */; };
+		984C1A75242F513C00ADCE86 /* RecentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984C1A74242F513C00ADCE86 /* RecentTableViewCell.swift */; };
 		984C1D4D242371BB00062791 /* UISegmentedControl+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984C1D4C242371BB00062791 /* UISegmentedControl+Ext.swift */; };
 		984C1D4F242377B400062791 /* UIImageView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984C1D4E242377B400062791 /* UIImageView+Ext.swift */; };
-		984C1D5124237D2900062791 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984C1D5024237D2900062791 /* ChatViewController.swift */; };
+		984C1D5124237D2900062791 /* ChatsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984C1D5024237D2900062791 /* ChatsViewController.swift */; };
 		984CC662241AFB9100933D4C /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984CC661241AFB9100933D4C /* User.swift */; };
 		984CC664241B008300933D4C /* DatabaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984CC663241B008300933D4C /* DatabaseService.swift */; };
 		984CC666241B0B6500933D4C /* Date+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984CC665241B0B6500933D4C /* Date+Ext.swift */; };
@@ -23,6 +24,7 @@
 		985282A9241A39A4008CA4B3 /* FinishedRegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985282A8241A39A4008CA4B3 /* FinishedRegisterViewController.swift */; };
 		9854C4FE2420843100634E93 /* UserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9854C4FD2420843100634E93 /* UserTableViewCell.swift */; };
 		98561670241F8A3D00AE60AA /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9856166F241F8A3D00AE60AA /* SettingsTableViewController.swift */; };
+		988D40EC2436FB46006FCC89 /* Array+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 988D40EB2436FB46006FCC89 /* Array+Ext.swift */; };
 		98BB7A3A2422A4C50059581F /* UIButton+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98BB7A392422A4C50059581F /* UIButton+Ext.swift */; };
 		98BB7A3C2422A8840059581F /* UITextField+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98BB7A3B2422A8840059581F /* UITextField+Ext.swift */; };
 		98BB7A3E2422AE1B0059581F /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98BB7A3D2422AE1B0059581F /* LoginViewController.swift */; };
@@ -42,9 +44,10 @@
 /* Begin PBXFileReference section */
 		677C4494A21AE6FFFD6CF0E0 /* Pods-iChatLab.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iChatLab.debug.xcconfig"; path = "Target Support Files/Pods-iChatLab/Pods-iChatLab.debug.xcconfig"; sourceTree = "<group>"; };
 		984A991424285A9E00FDB301 /* ProfileTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableViewController.swift; sourceTree = "<group>"; };
+		984C1A74242F513C00ADCE86 /* RecentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentTableViewCell.swift; sourceTree = "<group>"; };
 		984C1D4C242371BB00062791 /* UISegmentedControl+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UISegmentedControl+Ext.swift"; sourceTree = "<group>"; };
 		984C1D4E242377B400062791 /* UIImageView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Ext.swift"; sourceTree = "<group>"; };
-		984C1D5024237D2900062791 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
+		984C1D5024237D2900062791 /* ChatsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatsViewController.swift; sourceTree = "<group>"; };
 		984CC661241AFB9100933D4C /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		984CC663241B008300933D4C /* DatabaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseService.swift; sourceTree = "<group>"; };
 		984CC665241B0B6500933D4C /* Date+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Ext.swift"; sourceTree = "<group>"; };
@@ -57,6 +60,7 @@
 		985282A8241A39A4008CA4B3 /* FinishedRegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinishedRegisterViewController.swift; sourceTree = "<group>"; };
 		9854C4FD2420843100634E93 /* UserTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTableViewCell.swift; sourceTree = "<group>"; };
 		9856166F241F8A3D00AE60AA /* SettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
+		988D40EB2436FB46006FCC89 /* Array+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Ext.swift"; sourceTree = "<group>"; };
 		98BB7A392422A4C50059581F /* UIButton+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Ext.swift"; sourceTree = "<group>"; };
 		98BB7A3B2422A8840059581F /* UITextField+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Ext.swift"; sourceTree = "<group>"; };
 		98BB7A3D2422AE1B0059581F /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -101,6 +105,7 @@
 			isa = PBXGroup;
 			children = (
 				984CC661241AFB9100933D4C /* User.swift */,
+				984D615B2429AE3D00320762 /* Recent.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -111,7 +116,6 @@
 				984E3BB52424657600E68502 /* ViewPresenter.swift */,
 				9852829F241A28C6008CA4B3 /* Constants.swift */,
 				98BB7A412422B0810059581F /* Common.swift */,
-				984D615B2429AE3D00320762 /* Recent.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -148,6 +152,7 @@
 			isa = PBXGroup;
 			children = (
 				9854C4FD2420843100634E93 /* UserTableViewCell.swift */,
+				984C1A74242F513C00ADCE86 /* RecentTableViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -161,6 +166,7 @@
 				98BB7A3B2422A8840059581F /* UITextField+Ext.swift */,
 				984C1D4C242371BB00062791 /* UISegmentedControl+Ext.swift */,
 				984C1D4E242377B400062791 /* UIImageView+Ext.swift */,
+				988D40EB2436FB46006FCC89 /* Array+Ext.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -170,7 +176,7 @@
 			children = (
 				9856166F241F8A3D00AE60AA /* SettingsTableViewController.swift */,
 				984E4BAD242B38960061F3F1 /* CallViewController.swift */,
-				984C1D5024237D2900062791 /* ChatViewController.swift */,
+				984C1D5024237D2900062791 /* ChatsViewController.swift */,
 				98F7CBFE242B44A5003CA84C /* ChatViews */,
 			);
 			path = Main;
@@ -354,8 +360,10 @@
 				98BB7A3C2422A8840059581F /* UITextField+Ext.swift in Sources */,
 				98BB7A422422B0810059581F /* Common.swift in Sources */,
 				98BB7A3A2422A4C50059581F /* UIButton+Ext.swift in Sources */,
+				988D40EC2436FB46006FCC89 /* Array+Ext.swift in Sources */,
 				984C1D4D242371BB00062791 /* UISegmentedControl+Ext.swift in Sources */,
 				98BB7A402422AEA30059581F /* WelcomeViewController.swift in Sources */,
+				984C1A75242F513C00ADCE86 /* RecentTableViewCell.swift in Sources */,
 				985282A0241A28C6008CA4B3 /* Constants.swift in Sources */,
 				984E3BB62424657600E68502 /* ViewPresenter.swift in Sources */,
 				98C24EAC2419E627005C2D88 /* RegisterViewController.swift in Sources */,
@@ -370,7 +378,7 @@
 				984D615C2429AE3D00320762 /* Recent.swift in Sources */,
 				98F919C62418F35200B71450 /* SceneDelegate.swift in Sources */,
 				984CC662241AFB9100933D4C /* User.swift in Sources */,
-				984C1D5124237D2900062791 /* ChatViewController.swift in Sources */,
+				984C1D5124237D2900062791 /* ChatsViewController.swift in Sources */,
 				984A991524285A9E00FDB301 /* ProfileTableViewController.swift in Sources */,
 				984CC666241B0B6500933D4C /* Date+Ext.swift in Sources */,
 			);

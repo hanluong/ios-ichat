@@ -14,17 +14,16 @@ class UsersTableViewController: UITableViewController {
     // MARK: - Vars
     private let dbService = DatabaseService.instance
     
-    // MARK: - IBOutlets
-    @IBOutlet weak var headerView: UIView!
-    @IBOutlet weak var filterSegmentedControl: UISegmentedControl!
-    
-    // MARK: - Vars
     var allUsers = [User]()
     var filteredUsers = [User]()
     var allUsersGrouped = [String: [User]]()
     var sectionTitleList = [String]()
     
     let searchController = UISearchController(searchResultsController: nil)
+    
+    // MARK: - IBOutlets
+    @IBOutlet weak var headerView: UIView!
+    @IBOutlet weak var filterSegmentedControl: UISegmentedControl!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -165,11 +164,20 @@ class UsersTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        let selectedUser: User
+        if isUsingSearchController() {
+            selectedUser = self.filteredUsers[indexPath.row]
+        } else {
+            let users = self.allUsersGrouped[self.sectionTitleList[indexPath.section]]
+            selectedUser = users![indexPath.row]
+        }
         
+        // start create recent private chat
+        startPrivateChat(currentUser: dbService.currentUser()!, with: selectedUser)
         
-        let chattingVC = ChattingViewController()
-        chattingVC.hidesBottomBarWhenPushed = true
-        self.navigationController?.pushViewController(chattingVC, animated: true)
+//        let chattingVC = ChattingViewController()
+//        chattingVC.hidesBottomBarWhenPushed = true
+//        self.navigationController?.pushViewController(chattingVC, animated: true)
     }
     
     

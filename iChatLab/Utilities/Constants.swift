@@ -32,17 +32,24 @@ struct Storyboard {
         return vc
     }()
     
+    static let chattingView: ChattingViewController = {
+        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: Storyboard.ID.chattingView) as! ChattingViewController
+        return vc
+    }()
+    
     
     struct ID {
         static let mainView = "mainView"
         static let welcomeView = "welcomeView"
         static let profileView = "profileView"
+        static let chattingView = "chattingView"
     }
     
     struct Identifier {
         struct Cell {
             static let user = "userCell"
             static let setting = "settingCell"
+            static let recent = "recentCell"
         }
         struct Segue {
             static let goTiFinishedRegisterVC = "goToFinishedRegisterViewController"
@@ -76,6 +83,23 @@ public let kLOGIN_METHOD = "loginMethod"
 public let kIS_ONLINE = "isOnline"
 public let kCONTACT = "contact"
 public let kBLOCKED_USER_ID = "blockedUserId"
+
+// Recent
+public let kRECENT_ID = "recentId"
+public let kRECENT_NAME = "recentName"
+public let kRECENT_AVATAR = "recentAvatar"
+public let kCHATROOM_ID = "chatRoomId"
+public let kMEMBERS = "members"
+public let kMEMBERS_TO_PUSH = "membersToPush"
+public let kWITH_USER_FULL_NAME = "withUserFullName"
+public let kWITH_USER_ID = "withUserId"
+public let kLAST_MESSAGE = "lastMessage"
+public let kCOUNTER = "counter"
+public let kDATE = "date"
+public let kTYPE = "type"
+
+public let kPRIVATE = "private"
+public let kGROUP = "group"
 
 
 //func isPasswordValid(_ password : String) -> Bool {

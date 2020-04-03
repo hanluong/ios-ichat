@@ -77,6 +77,7 @@ class ChattingViewController: JSQMessagesViewController {
             
             // revert sending button
             self.updateSendButton(isEnable: false)
+            finishSendingMessage(animated: true)
         } else {
             print("audio send")
         }

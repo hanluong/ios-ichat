@@ -137,7 +137,7 @@ extension ChatsViewController: UITableViewDelegate, UITableViewDataSource {
         swipeActions.performsFirstActionWithFullSwipe = false
         return swipeActions
     }
-    
+
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         return 100
     }
@@ -178,7 +178,8 @@ extension ChatsViewController: UITableViewDelegate, UITableViewDataSource {
         recreateRecentChat(selectedRecent)
         
         // goto Chatting View Controller
-        let chattingVC = Storyboard.chattingView
+        let chattingVC = ChattingViewController()
+        chattingVC.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(chattingVC, animated: true)
     }
 }

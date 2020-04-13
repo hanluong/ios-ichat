@@ -28,10 +28,10 @@ class Common {
         withBlock(img!)
     }
 
-    class func imageFromdata(imageData: String, withBlock: @escaping (_ image: UIImage?) -> Void) {
-        var image: UIImage?
+    class func imageFromdata(imageData: String) -> UIImage {
+        var image: UIImage
         let decodedImageData = NSData(base64Encoded: imageData, options: .init(rawValue: 0))
-        image = UIImage(data: decodedImageData! as Data)
-        withBlock(image)
+        image = UIImage(data: decodedImageData! as Data)!
+        return image
     }
 }

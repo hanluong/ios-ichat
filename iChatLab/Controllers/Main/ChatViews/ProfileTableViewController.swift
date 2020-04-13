@@ -96,9 +96,7 @@ class ProfileTableViewController: UITableViewController {
     private func configCellsInfo() {
         userNameLabel.text = user.fullName
         phoneLabel.text = user.phoneNumber
-        Common.imageFromdata(imageData: user.avatar) { (image) in
-            self.avatarImageView.image = image
-        }
+        self.avatarImageView.image = Common.imageFromdata(imageData: user.avatar)
         updateBlockUserButton()
     }
  

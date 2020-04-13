@@ -24,6 +24,8 @@
 		985282A9241A39A4008CA4B3 /* FinishedRegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985282A8241A39A4008CA4B3 /* FinishedRegisterViewController.swift */; };
 		9854C4FE2420843100634E93 /* UserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9854C4FD2420843100634E93 /* UserTableViewCell.swift */; };
 		98561670241F8A3D00AE60AA /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9856166F241F8A3D00AE60AA /* SettingsTableViewController.swift */; };
+		985A405F243EF4CA00209334 /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985A405E243EF4CA00209334 /* Camera.swift */; };
+		988BBE152437C52400E49B4B /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 988BBE142437C52400E49B4B /* Message.swift */; };
 		988D40EC2436FB46006FCC89 /* Array+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 988D40EB2436FB46006FCC89 /* Array+Ext.swift */; };
 		98BB7A3A2422A4C50059581F /* UIButton+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98BB7A392422A4C50059581F /* UIButton+Ext.swift */; };
 		98BB7A3C2422A8840059581F /* UITextField+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98BB7A3B2422A8840059581F /* UITextField+Ext.swift */; };
@@ -60,6 +62,8 @@
 		985282A8241A39A4008CA4B3 /* FinishedRegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinishedRegisterViewController.swift; sourceTree = "<group>"; };
 		9854C4FD2420843100634E93 /* UserTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTableViewCell.swift; sourceTree = "<group>"; };
 		9856166F241F8A3D00AE60AA /* SettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
+		985A405E243EF4CA00209334 /* Camera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
+		988BBE142437C52400E49B4B /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		988D40EB2436FB46006FCC89 /* Array+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Ext.swift"; sourceTree = "<group>"; };
 		98BB7A392422A4C50059581F /* UIButton+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Ext.swift"; sourceTree = "<group>"; };
 		98BB7A3B2422A8840059581F /* UITextField+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Ext.swift"; sourceTree = "<group>"; };
@@ -106,6 +110,8 @@
 			children = (
 				984CC661241AFB9100933D4C /* User.swift */,
 				984D615B2429AE3D00320762 /* Recent.swift */,
+				988BBE142437C52400E49B4B /* Message.swift */,
+				985A405E243EF4CA00209334 /* Camera.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -367,6 +373,7 @@
 				985282A0241A28C6008CA4B3 /* Constants.swift in Sources */,
 				984E3BB62424657600E68502 /* ViewPresenter.swift in Sources */,
 				98C24EAC2419E627005C2D88 /* RegisterViewController.swift in Sources */,
+				988BBE152437C52400E49B4B /* Message.swift in Sources */,
 				984CE0B1241C8B8C0057AC92 /* Notification+Ext.swift in Sources */,
 				984E4BAE242B38960061F3F1 /* CallViewController.swift in Sources */,
 				98F919C42418F35200B71450 /* AppDelegate.swift in Sources */,
@@ -374,6 +381,7 @@
 				9850D76B2420AD6F005DBE14 /* UsersTableViewController.swift in Sources */,
 				98F7CC00242B488E003CA84C /* ChattingViewController.swift in Sources */,
 				98BB7A3E2422AE1B0059581F /* LoginViewController.swift in Sources */,
+				985A405F243EF4CA00209334 /* Camera.swift in Sources */,
 				984C1D4F242377B400062791 /* UIImageView+Ext.swift in Sources */,
 				984D615C2429AE3D00320762 /* Recent.swift in Sources */,
 				98F919C62418F35200B71450 /* SceneDelegate.swift in Sources */,

@@ -175,10 +175,12 @@ class UsersTableViewController: UITableViewController {
         // start create recent private chat
         startPrivateChat(currentUser: dbService.currentUser()!, with: selectedUser)
         
-        // goto Chatting View Controller
-        let chattingVC = ChattingViewController()
-        chattingVC.hidesBottomBarWhenPushed = true
-        self.navigationController?.pushViewController(chattingVC, animated: true)
+//        // goto Chatting View Controller
+//        let chattingVC = ChattingViewController()
+//        chattingVC.hidesBottomBarWhenPushed = true
+//        chattingVC.chatRoomId = generateChatRoomId(currentUser: dbService.currentUser()!, with: selectedUser)
+//        chattingVC.title = selectedUser.fullName
+//        self.navigationController?.pushViewController(chattingVC, animated: true)
     }
     
     

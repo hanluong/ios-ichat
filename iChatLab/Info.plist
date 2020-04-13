@@ -60,5 +60,17 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>NSCameraUsageDescription</key>
+	<string>iChatLab needs your camera</string>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>iChatLab needs your media library</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>iChatLab needs your photo library</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>iChatLab needs your microphone</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>iChatLab needs your location</string>
+	<key>NSContactsUsageDescription</key>
+	<string>iChatLab needs your contacts</string>
 </dict>
 </plist>

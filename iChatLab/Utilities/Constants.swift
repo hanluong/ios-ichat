@@ -98,8 +98,23 @@ public let kCOUNTER = "counter"
 public let kDATE = "date"
 public let kTYPE = "type"
 
+// Message
+public let kMESSAGE_ID = "id"
+public let kMESSAGE_TEXT = "text"
+public let kMESSAGE_IMAGE_URL = "imageURL"
+public let kMESSAGE_TYPE = "type"
+public let kMESSAGE_STATUS = "status"
+public let kMESSAGE_SENDER_ID = "senderId"
+public let kMESSAGE_SENDER_DISPLAY_NAME = "senderDisplayName"
+public let kMESSAGE_NUM_DEFAULT_LOAD_ON_SCREEN = 10
+
+
 public let kPRIVATE = "private"
 public let kGROUP = "group"
+
+public let kMAX_DURATION = 120.0
+public let kMAX_AUDIO_DURATION = 120.0
+public let kNO_IMAGE = "NOIMAGE"
 
 
 //func isPasswordValid(_ password : String) -> Bool {

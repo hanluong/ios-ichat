@@ -42,12 +42,7 @@ class UserTableViewCell: UITableViewCell {
     
     func configureUserCell(with user: User, indexPath: IndexPath) {
         self.indexPath = indexPath
-        Common.imageFromdata(imageData: user.avatar, withBlock: { (image) in
-            if let image = image {
-                self.avatarImageView.image = image
-            }
-        })
-        
+        self.avatarImageView.image = Common.imageFromdata(imageData: user.avatar)
         self.userNameLabel.text = user.fullName
     }
     

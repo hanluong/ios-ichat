@@ -65,16 +65,24 @@ struct Recent: Decodable {
 
 
 // generate chatRoomId between current user and selected user
-func startPrivateChat(currentUser: User, with selectedUser: User) {
+func generateChatRoomId(currentUser: User, with selectedUser: User) -> String {
     let currentUserId = currentUser.objectId
     let selectedUserId = selectedUser.objectId
-    let membersId: [String] = [currentUserId, selectedUserId]
     let chatRoomId: String!
     if currentUserId.compare(selectedUserId).rawValue < 0 {
         chatRoomId = currentUserId + selectedUserId
     } else {
         chatRoomId = selectedUserId + currentUserId
     }
+    
+    return chatRoomId
+}
+
+func startPrivateChat(currentUser: User, with selectedUser: User) {
+    let currentUserId = currentUser.objectId
+    let selectedUserId = selectedUser.objectId
+    let membersId: [String] = [currentUserId, selectedUserId]
+    let chatRoomId = generateChatRoomId(currentUser: currentUser, with: selectedUser)
     
     // Check current recent for everyone in membersId
     reference(.Recent).whereField(kCHATROOM_ID, isEqualTo: chatRoomId as String).getDocuments { (snapshot, error) in

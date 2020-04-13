@@ -47,16 +47,12 @@ class RecentTableViewCell: UITableViewCell {
     }
     
     func configureRecentCell(_ recent: Recent, at indexPath: IndexPath) {
-        Common.imageFromdata(imageData: recent.avatar, withBlock: { (image) in
-            if let image = image {
-                self.avatarImageView.image = image
-                
-                // Add tapGestureRecognizer for image
-                self.indexPath = indexPath
-                let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.didImageTap))
-                self.avatarImageView.addGestureRecognizer(tapGesture)
-            }
-        })
+        self.avatarImageView.image = Common.imageFromdata(imageData: recent.avatar)
+        // Add tapGestureRecognizer for image
+        self.indexPath = indexPath
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.didImageTap))
+        self.avatarImageView.addGestureRecognizer(tapGesture)
+        
         self.fullNameLabel.text = recent.name
         self.dateLabel.text = Date.timeElapsed(date: Date.dateFormatter().date(from: recent.date)!)
         self.lastMessageLabel.text = recent.lastMessage

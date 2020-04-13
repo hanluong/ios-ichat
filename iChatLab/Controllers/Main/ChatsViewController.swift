@@ -180,6 +180,10 @@ extension ChatsViewController: UITableViewDelegate, UITableViewDataSource {
         // goto Chatting View Controller
         let chattingVC = ChattingViewController()
         chattingVC.hidesBottomBarWhenPushed = true
+        chattingVC.chatRoomId = selectedRecent.chatRoomId
+        chattingVC.chatWithUser = selectedRecent.name
+        chattingVC.membersIdToPush = selectedRecent.membersId
+        chattingVC.type = selectedRecent.type
         navigationController?.pushViewController(chattingVC, animated: true)
     }
 }

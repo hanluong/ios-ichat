@@ -1,5 +1,5 @@
 //
-//  ChatsViewController.swift
+//  RecentsViewController.swift
 //  iChatLab
 //
 //  Created by Han Luong on 3/19/20.
@@ -9,7 +9,7 @@
 import UIKit
 import FirebaseFirestore
 
-class ChatsViewController: UIViewController {
+class RecentsViewController: UIViewController {
 
     // MARK: - Variables
     private let dbService = DatabaseService.instance
@@ -60,7 +60,7 @@ class ChatsViewController: UIViewController {
     }
     
     private func loadAllRecentsChat() {
-        recentListener = reference(.Recent).whereField(kUSER_ID, isEqualTo: dbService.currentId()).addSnapshotListener({ (snapshot, error) in
+        recentListener = reference(.Recent).whereField(kUSER_ID, isEqualTo: dbService.currentUserId()).addSnapshotListener({ (snapshot, error) in
             guard let snapshot = snapshot else { return }
             self.recentChats = []
             self.filteredRecentChats = []
@@ -100,7 +100,9 @@ class ChatsViewController: UIViewController {
     }
 }
 
-extension ChatsViewController: UITableViewDelegate, UITableViewDataSource {
+// MARK: - Extension UITableViewDelegate, UITableViewDataSource
+
+extension RecentsViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
@@ -122,7 +124,6 @@ extension ChatsViewController: UITableViewDelegate, UITableViewDataSource {
         
         // delete action
         let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { (_, _, completion) in
-            // TODO: delete recent db in firestore
             deleteRecentById(selectedRecent.id) { (success) in
                 if success {
                     completion(true)
@@ -181,14 +182,14 @@ extension ChatsViewController: UITableViewDelegate, UITableViewDataSource {
         let chattingVC = ChattingViewController()
         chattingVC.hidesBottomBarWhenPushed = true
         chattingVC.chatRoomId = selectedRecent.chatRoomId
-        chattingVC.chatWithUser = selectedRecent.name
         chattingVC.membersIdToPush = selectedRecent.membersId
         chattingVC.type = selectedRecent.type
         navigationController?.pushViewController(chattingVC, animated: true)
     }
 }
 
-extension ChatsViewController: RecentTableViewCellDelegate {
+// MARK: - Extension RecentTableViewCellDelegate
+extension RecentsViewController: RecentTableViewCellDelegate {
     func didTapOnAvatarImage(at indexPath: IndexPath) {
         // get user from selected recent image
         var selectedRecent: Recent!
@@ -199,7 +200,7 @@ extension ChatsViewController: RecentTableViewCellDelegate {
         }
         
         if selectedRecent.type == kPRIVATE {
-            let index = selectedRecent.membersId.firstIndex(of: dbService.currentId())
+            let index = selectedRecent.membersId.firstIndex(of: dbService.currentUserId())
             selectedRecent.membersId.remove(at: index!)
         } else {
             // group
@@ -222,7 +223,8 @@ extension ChatsViewController: RecentTableViewCellDelegate {
     
 }
 
-extension ChatsViewController: UISearchResultsUpdating {
+// MARK: - Extension UISearchResultsUpdating
+extension RecentsViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         self.filteredRecentChats = self.recentChats.filter({ (recent) -> Bool in
             return recent.name.lowercased().contains(searchController.searchBar.text!.lowercased())

@@ -66,8 +66,8 @@ struct Recent: Decodable {
 
 // generate chatRoomId between current user and selected user
 func generateChatRoomId(currentUser: User, with selectedUser: User) -> String {
-    let currentUserId = currentUser.objectId
-    let selectedUserId = selectedUser.objectId
+    let currentUserId = currentUser.id
+    let selectedUserId = selectedUser.id
     let chatRoomId: String!
     if currentUserId.compare(selectedUserId).rawValue < 0 {
         chatRoomId = currentUserId + selectedUserId
@@ -79,8 +79,8 @@ func generateChatRoomId(currentUser: User, with selectedUser: User) -> String {
 }
 
 func startPrivateChat(currentUser: User, with selectedUser: User) {
-    let currentUserId = currentUser.objectId
-    let selectedUserId = selectedUser.objectId
+    let currentUserId = currentUser.id
+    let selectedUserId = selectedUser.id
     let membersId: [String] = [currentUserId, selectedUserId]
     let chatRoomId = generateChatRoomId(currentUser: currentUser, with: selectedUser)
     

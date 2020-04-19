@@ -13,17 +13,17 @@ import JSQMessagesViewController
 import AVKit
 import AVFoundation
 import IQAudioRecorderController
-import IDMPhotoBrowser
+import SKPhotoBrowser
 import Firebase
 
-class ChattingViewController: JSQMessagesViewController {
+class ChattingViewController: JSQMessagesViewController, CLLocationManagerDelegate {
     
     // MARK: - Vars
+    private var locationManager: CLLocationManager!
     private let dbService = DatabaseService.instance
-    private let storage = Storage.storage().reference(forURL: "gs://ichatlab.appspot.com")
+    private let storageService = StorageService.instance
     
     var chatRoomId: String!
-    var chatWithUser: String!
     var type: String!
     var membersIdToPush: [String]!
     
@@ -37,7 +37,14 @@ class ChattingViewController: JSQMessagesViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.senderId = dbService.currentId()
+        locationManager = CLLocationManager()
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.distanceFilter = kCLDistanceFilterNone
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.startUpdatingLocation()
+        
+        self.senderId = dbService.currentUserId()
         self.senderDisplayName = dbService.currentUser()!.firstName
         
         loadUsers { (success) in
@@ -47,6 +54,8 @@ class ChattingViewController: JSQMessagesViewController {
             }
         }
     }
+    
+    // MARK: - Implement chatting
     
     override func didPressAccessoryButton(_ sender: UIButton!) {
         let menuOptions = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
@@ -62,9 +71,14 @@ class ChattingViewController: JSQMessagesViewController {
             camera.presentVideoLibrary(target: self, canEdit: false)
         }
         let locationAction = UIAlertAction(title: "Location", style: .default) { (action) in
-            print("Location")
+            if self.haveAccessLocation() {
+                let locationMediaItem = JSQLocationMediaItem(location: self.locationManager.location!)
+                guard let message = Message(chatRoomId: self.chatRoomId, senderId: self.senderId, senderDisplayName: self.senderDisplayName, date: Date(), locationMediaItem: locationMediaItem!) else { return }
+                message.sendMessageTo(membersIdToPush: self.membersIdToPush)
+            }
         }
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (action) in
+            // TODO: set cancel action
             print("Cancel")
         }
         cameraAction.setValue(UIImage(named: "camera"), forKey: "image")
@@ -90,20 +104,19 @@ class ChattingViewController: JSQMessagesViewController {
     
     override func didPressSend(_ button: UIButton!, withMessageText text: String!, senderId: String!, senderDisplayName: String!, date: Date!) {
         if text.trimmingCharacters(in: .whitespacesAndNewlines) != "" {
-            //            let message = Message(id: UUID().uuidString, chatRoomId: chatRoomId, senderId: senderId, senderDisplayName: senderDisplayName, date: date, text: text, status: .sending, type: .text)
-            let message = Message(id: UUID().uuidString, chatRoomId: chatRoomId, senderId: senderId, senderDisplayName: senderDisplayName, date: date, text: text)
+            let message = Message(chatRoomId: chatRoomId, senderId: senderId, senderDisplayName: senderDisplayName, date: date, text: text)
             message!.sendMessageTo(membersIdToPush: membersIdToPush)
-            JSQSystemSoundPlayer.jsq_playMessageSentSound()
-            
-            // revert sending button
             self.updateSendButton(isEnable: false)
-            self.finishSendingMessage(animated: true)
         } else {
-            print("audio send")
+            let audioVC = IQAudioRecorderViewController()
+            audioVC.delegate = self
+            audioVC.title = "Recoder"
+            audioVC.maximumRecordDuration = kMAX_AUDIO_DURATION
+            audioVC.allowCropping = true
+            self.presentBlurredAudioRecorderViewControllerAnimated(audioVC)
         }
     }
     
-    // MARK: - Implement collection view for chatting
     override func collectionView(_ collectionView: JSQMessagesCollectionView!, avatarImageDataForItemAt indexPath: IndexPath!) -> JSQMessageAvatarImageDataSource! {
         return nil
     }
@@ -125,7 +138,7 @@ class ChattingViewController: JSQMessagesViewController {
         return self.messages.count
     }
     
-    // MARK: - timestamp for chatting
+    // config timestamp for chatting
     override func collectionView(_ collectionView: JSQMessagesCollectionView!, layout collectionViewLayout: JSQMessagesCollectionViewFlowLayout!, heightForCellTopLabelAt indexPath: IndexPath!) -> CGFloat {
         if indexPath.row % 5 == 0 {
             return kJSQMessagesCollectionViewCellLabelHeightDefault
@@ -142,7 +155,7 @@ class ChattingViewController: JSQMessagesViewController {
         }
     }
     
-    // MARK: - message status
+    // config message status for chatting
     override func collectionView(_ collectionView: JSQMessagesCollectionView!, layout collectionViewLayout: JSQMessagesCollectionViewFlowLayout!, heightForCellBottomLabelAt indexPath: IndexPath!) -> CGFloat {
         if indexPath.row == self.messages.count - 1 {
             return kJSQMessagesCollectionViewCellLabelHeightDefault
@@ -159,13 +172,42 @@ class ChattingViewController: JSQMessagesViewController {
         }
     }
     
-    // MARK: - Load more message
+    // Load more message
     override func collectionView(_ collectionView: JSQMessagesCollectionView!, header headerView: JSQMessagesLoadEarlierHeaderView!, didTapLoadEarlierMessagesButton sender: UIButton!) {
         loadOldMessages()
         self.collectionView.reloadData()
     }
     
+    override func collectionView(_ collectionView: JSQMessagesCollectionView!, didTapMessageBubbleAt indexPath: IndexPath!) {
+        let message = self.messages[indexPath.row]
+        switch message.type {
+        case .photo:
+            let skPhoto = SKPhoto.photoWithImage(message.photoMediaItem!.image)
+            let browser = SKPhotoBrowser(photos: [skPhoto])
+            self.present(browser, animated: true, completion: nil)
+        case .video:
+            let player = AVPlayer(url: message.videoMediaItem!.fileURL as URL)
+            let moviePlayer = AVPlayerViewController()
+            let session = AVAudioSession.sharedInstance()
+            try! session.setCategory(.playAndRecord, mode: .default, options: .defaultToSpeaker)
+            moviePlayer.player = player
+            self.present(moviePlayer, animated: true) {
+                moviePlayer.player!.play()
+            }
+        default:
+            print("Unknown Message Type")
+        }
+    }
+    
     // MARK: - Helpers function
+    private func haveAccessLocation() -> Bool {
+        if locationManager != nil {
+            return true
+        } else {
+            ProgressHUD.showError("ERROR! not accessed to your location")
+            return false
+        }
+    }
     
     private func loadUsers(completion: @escaping (_ success: Bool) -> Void) {
         for memberId in membersIdToPush {
@@ -210,12 +252,11 @@ class ChattingViewController: JSQMessagesViewController {
         let titleLabel: UILabel = {
             let title = UILabel(frame: CGRect(x: 40, y: 5, width: 150, height: 20))
             if type == kPRIVATE {
-                title.text = members[0].fullName
+                title.text = members[0].id != senderId ? members[0].fullName : members[1].fullName
                 title.font = UIFont(name: title.font.familyName, size: 15)
                 title.textColor = #colorLiteral(red: 0.3254901961, green: 0.4196078431, blue: 0.7764705882, alpha: 1)
             } else {
-                // TODO:
-                // - for group
+                // TODO: for group
             }
             return title
         }()
@@ -223,12 +264,11 @@ class ChattingViewController: JSQMessagesViewController {
         let subTitleLabel: UILabel = {
             let subTitle = UILabel(frame: CGRect(x: 40, y: 22, width: 150, height: 15))
             if type == kPRIVATE {
-                subTitle.text = members[0].email
+                subTitle.text = members[0].id != senderId ? members[0].email : members[1].email
                 subTitle.font = UIFont(name: subTitle.font.familyName, size: 12)
                 subTitle.textColor = #colorLiteral(red: 0.3254901961, green: 0.4196078431, blue: 0.7764705882, alpha: 1)
             } else {
-                // TODO:
-                // - for group
+                // TODO: for group
             }
             return subTitle
         }()
@@ -252,6 +292,7 @@ class ChattingViewController: JSQMessagesViewController {
     }
     
     @objc func infoButtonPressed() {
+        // TODO: set infoButtonPressed
         print("infoButtonPressed() ......")
     }
     
@@ -261,8 +302,7 @@ class ChattingViewController: JSQMessagesViewController {
             profileVC.user = members[0]
             self.navigationController?.pushViewController(profileVC, animated: true)
         } else {
-            // TODO:
-            // - for group here
+            // TODO: for group here
         }
     }
     
@@ -271,16 +311,15 @@ class ChattingViewController: JSQMessagesViewController {
     }
     
     private func loadMessages() {
-        // TODO:
-        // - load last default messages
-        reference(.Message).document(dbService.currentId()).collection(chatRoomId).order(by: kDATE, descending: true).limit(to: kMESSAGE_NUM_DEFAULT_LOAD_ON_SCREEN).getDocuments { (snapshot, error) in
+        // load last default messages
+        reference(.Message).document(senderId).collection(chatRoomId).order(by: kDATE, descending: true).limit(to: kMESSAGE_NUM_DEFAULT_LOAD_ON_SCREEN).getDocuments { (snapshot, error) in
             guard let snapshot = snapshot, error == nil else {
                 return
             }
             for document in snapshot.documents {
                 let messageDict = document.data()
                 if let message = Message(messageDict) {
-                    message.downloadJSQPhotoMediaItem { (success) in
+                    message.downloadJSQMediaItem { (success) in
                         if success {
                             DispatchQueue.main.async {
                                 self.collectionView.reloadData()
@@ -294,11 +333,10 @@ class ChattingViewController: JSQMessagesViewController {
                 self.messages = self.messages.sorted {$0 < $1}
                 self.collectionView.reloadData()
                 
-                // TODO:
-                // - load old messages in backgroud
+                // load old messages in backgroud
                 if let oldestMessageLoaded = self.messages.first {
                     
-                    reference(.Message).document(self.dbService.currentId()).collection(self.chatRoomId).whereField(kDATE, isLessThan: Date.dateFormatter().string(from: oldestMessageLoaded.date)).order(by: kDATE, descending: true).getDocuments { (snapshot, error) in
+                    reference(.Message).document(self.senderId).collection(self.chatRoomId).whereField(kDATE, isLessThan: Date.dateFormatter().string(from: oldestMessageLoaded.date)).order(by: kDATE, descending: true).getDocuments { (snapshot, error) in
                         guard let snapshot = snapshot, error == nil else {
                             return
                         }
@@ -310,6 +348,8 @@ class ChattingViewController: JSQMessagesViewController {
                         self.checkShowEarlierMessagesHeader()
                     }
                 }
+                self.scrollToBottom(animated: true) // scroll to bottom at the first time load messages
+                
                 // Listen new chatting message
                 self.listenNewChatMessage()
             }
@@ -328,7 +368,7 @@ class ChattingViewController: JSQMessagesViewController {
         var count = 0
         while self.loadedMessages.count > 0 &&  count < kMESSAGE_NUM_DEFAULT_LOAD_ON_SCREEN {
             let message = self.loadedMessages.popLast()!
-            message.downloadJSQPhotoMediaItem { (success) in
+            message.downloadJSQMediaItem { (success) in
                 if success {
                     DispatchQueue.main.async {
                         self.collectionView.reloadData()
@@ -342,13 +382,12 @@ class ChattingViewController: JSQMessagesViewController {
     }
     
     func listenNewChatMessage() {
-        // TODO:
-        // - listen new chat messages
+        // listen new chat messages
         let query: Query
         if let latestMessage = self.messages.last {
-            query = reference(.Message).document(dbService.currentId()).collection(chatRoomId).whereField(kDATE, isGreaterThan: Date.dateFormatter().string(from: latestMessage.date))
+            query = reference(.Message).document(senderId).collection(chatRoomId).whereField(kDATE, isGreaterThan: Date.dateFormatter().string(from: latestMessage.date))
         } else {
-            query = reference(.Message).document(dbService.currentId()).collection(chatRoomId)
+            query = reference(.Message).document(senderId).collection(chatRoomId)
         }
         query.addSnapshotListener { (snapshots, error) in
             guard let snapshots = snapshots, error == nil else {
@@ -358,14 +397,22 @@ class ChattingViewController: JSQMessagesViewController {
                 if diff.type == .added {
                     let messageDict = diff.document.data()
                     if let message = Message(messageDict) {
-                        message.downloadJSQPhotoMediaItem { (success) in
-                            if success {
-                                DispatchQueue.main.async {
-                                    self.collectionView.reloadData()
+                        if message.type == .location {
+                            message.locationMediaItem?.setLocation(self.locationManager.location!, withCompletionHandler: {
+                                self.collectionView.reloadData()
+                            })
+                        } else {
+                            message.downloadJSQMediaItem { (success) in
+                                if success {
+                                    DispatchQueue.main.async {
+                                        self.collectionView.reloadData()
+                                    }
                                 }
                             }
+                            self.messages.append(message)
+                            JSQSystemSoundPlayer.jsq_playMessageSentSound()
+                            self.finishSendingMessage(animated: true)
                         }
-                        self.messages.append(message)
                     }
                 }
             }
@@ -375,71 +422,55 @@ class ChattingViewController: JSQMessagesViewController {
         }
     }
     
-    func uploadPhotoImageToFirestore(_ image: UIImage, completion: @escaping (_ imageURL: String?) -> Void) {
-        let progressHUD = MBProgressHUD.showAdded(to: self.view, animated: true)
-        progressHUD.mode = .determinateHorizontalBar
-        
-        let dateString = Date.dateFormatter().string(from: Date())
-        let imageFileName = "PictureMessages/" + dbService.currentId() + "/" + chatRoomId + "/" + dateString + ".jpg"
-        let storageRef = storage.child(imageFileName)
-        let meta = StorageMetadata()
-        meta.contentType = "image/jpg"
-        
-        var task: StorageUploadTask!
-        if let imageData = image.jpegData(compressionQuality: 0.7) {
-            task = storageRef.putData(imageData, metadata: meta, completion: { (metadata, error) in
-                task.removeAllObservers()
-                progressHUD.hide(animated: true)
-                
-                if let error = error {
-                    print("ERROR! uploading image: \(error.localizedDescription)")
-                    return
-                }
-                
-                storageRef.downloadURL { (url, error) in
-                    guard let url = url, error == nil else {
-                        print("ERROR! downloading image url \(error!.localizedDescription)")
-                        completion(nil)
-                        return
-                    }
-                    completion(url.absoluteString)
-                }
-            })
-            
-            task.observe(.progress) { (snapshot) in
-                progressHUD.progress = Float((snapshot.progress?.completedUnitCount)!)/Float((snapshot.progress?.totalUnitCount)!)
-            }
-        }
-    }
-    
-    
 }
 
+// MARK: - Implement UIImagePickerControllerDelegate, UINavigationControllerDelegate
 extension ChattingViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        // - Dismiss picker controller
-        // - Create JSQMessage for media image
+        // Dismiss picker controller
+        // Create JSQMessage for media image
         picker.dismiss(animated: true, completion: nil)
         
         if let originalImage = info[.originalImage] as? UIImage {
             // upload photo
-            let resizedImage = originalImage.resizeImage(newWidth: 200)
-            self.uploadPhotoImageToFirestore(resizedImage) { (imageURL) in
-                if let message = Message(id: UUID().uuidString, chatRoomId: self.chatRoomId, senderId: self.senderId, senderDisplayName: self.senderDisplayName, date: Date(), imageURL: imageURL!,  type: .photo) {
+            guard let resizedImage = originalImage.scaledToSafeUploadSize else { return }
+            storageService.uploadPhotoImageToFirestore(resizedImage, senderId: senderId, chatRoomId: chatRoomId, view: self.view) { (imageUrl) in
+                guard let imageUrl = imageUrl else { return }
+                if let message = Message(chatRoomId: self.chatRoomId, senderId: self.senderId, senderDisplayName: self.senderDisplayName, date: Date(), mediaURL: imageUrl,  type: .photo) {
+                    message.sendMessageTo(membersIdToPush: self.membersIdToPush)
+                }
+            }
+        } else if let video = info[.mediaURL] as? NSURL {
+            // upload video
+            guard let videoData = NSData(contentsOfFile: video.path!) else { return }
+            storageService.uploadVideoToFirestore(videoData, senderId: senderId, chatRoomId: chatRoomId, view: self.view) { (videoUrl) in
+                guard let videoUrl = videoUrl else { return }
+                if let message = Message(chatRoomId: self.chatRoomId, senderId: self.senderId, senderDisplayName: self.senderDisplayName, date: Date(), mediaURL: videoUrl, type: .video) {
                     message.sendMessageTo(membersIdToPush: self.membersIdToPush)
                 }
             }
         }
     }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true, completion: nil)
+    }
 }
 
-extension JSQMessagesInputToolbar {
-    open override func didMoveToWindow() {
-        super.didMoveToWindow()
-        if #available(iOS 11.0, *) {
-            if self.window?.safeAreaLayoutGuide != nil {
-                self.bottomAnchor.constraint(lessThanOrEqualToSystemSpacingBelow: (self.window?.safeAreaLayoutGuide.bottomAnchor)!, multiplier: 1.0).isActive = true
+// MARK: - Implement IQAudioRecorderViewControllerDelegate
+extension ChattingViewController: IQAudioRecorderViewControllerDelegate {
+    func audioRecorderController(_ controller: IQAudioRecorderViewController, didFinishWithAudioAtPath filePath: String) {
+        controller.dismiss(animated: true, completion: nil)
+        guard let audioData = NSData(contentsOfFile: filePath) else { return }
+        storageService.uploadAudioToFirestore(audioData, senderId: senderId, chatRoomId: chatRoomId, view: self.view) { (audioUrl) in
+            guard let audioUrl = audioUrl else { return }
+            if let message = Message(chatRoomId: self.chatRoomId, senderId: self.senderId, senderDisplayName: self.senderDisplayName, date: Date(), mediaURL: audioUrl, type: .audio) {
+                message.sendMessageTo(membersIdToPush: self.membersIdToPush)
             }
         }
+    }
+    
+    func audioRecorderControllerDidCancel(_ controller: IQAudioRecorderViewController) {
+        controller.dismiss(animated: true, completion: nil)
     }
 }

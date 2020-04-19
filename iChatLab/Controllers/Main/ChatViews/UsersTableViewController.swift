@@ -91,7 +91,7 @@ class UsersTableViewController: UITableViewController {
             if !snapshot.isEmpty {
                 self.allUsers = snapshot.documents.compactMap { document in
                     let user = User(dictionary: document.data() as [String:Any])
-                    if self.dbService.currentId() != user.objectId {
+                    if self.dbService.currentUserId() != user.id {
                         return user
                     }
                     return nil

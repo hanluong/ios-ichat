@@ -101,7 +101,9 @@ public let kTYPE = "type"
 // Message
 public let kMESSAGE_ID = "id"
 public let kMESSAGE_TEXT = "text"
-public let kMESSAGE_IMAGE_URL = "imageURL"
+public let kMESSAGE_MEDIA_URL = "mediaURL"
+public let kMESSAGE_LOCATION_LATITUDE = "latitude"
+public let kMESSAGE_LOCATION_LONGITUDE = "longitude"
 public let kMESSAGE_TYPE = "type"
 public let kMESSAGE_STATUS = "status"
 public let kMESSAGE_SENDER_ID = "senderId"
@@ -114,7 +116,7 @@ public let kGROUP = "group"
 
 public let kMAX_DURATION = 120.0
 public let kMAX_AUDIO_DURATION = 120.0
-public let kNO_IMAGE = "NOIMAGE"
+public let kNO_URL = "NO_URL"
 
 
 //func isPasswordValid(_ password : String) -> Bool {

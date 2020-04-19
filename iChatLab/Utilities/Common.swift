@@ -34,4 +34,18 @@ class Common {
         image = UIImage(data: decodedImageData! as Data)!
         return image
     }
+    
+    class func getCurrentDocumentURL() -> URL {
+        let documentURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).last
+        return documentURL!
+    }
+
+    class func doesFileExistsInCurrentDocument(fileName: String) -> Bool {
+        let fileURL = getCurrentDocumentURL().appendingPathComponent(fileName)
+        if FileManager.default.fileExists(atPath: fileURL.path) {
+            return true
+        } else {
+            return false
+        }
+    }
 }

@@ -26,7 +26,7 @@ class DatabaseService {
     static let instance = DatabaseService()
     
     
-    func currentId() -> String {
+    func currentUserId() -> String {
         return Auth.auth().currentUser!.uid
     }
     
@@ -53,7 +53,7 @@ class DatabaseService {
                     }
                     
                     // Notification user did login
-                    NotificationCenter.default.post(name: .userDidLoginNotif, object: nil, userInfo: [kUSER_ID: self.currentId()])
+                    NotificationCenter.default.post(name: .userDidLoginNotif, object: nil, userInfo: [kUSER_ID: self.currentUserId()])
                 }
             }
             completion(error)
@@ -74,7 +74,7 @@ class DatabaseService {
     }
     
     func fetchCurrentUserFromFirestore(userId: String, completion: @escaping (_ error: Error?) -> Void) {
-        reference(.User).document(currentId()).getDocument { (snapshot, error) in
+        reference(.User).document(currentUserId()).getDocument { (snapshot, error) in
             if let error = error {
                 print(error.localizedDescription)
                 completion(error)
@@ -108,7 +108,7 @@ class DatabaseService {
                 self.saveUserInFirestore(user)
                 
                 // Notification user did login
-                NotificationCenter.default.post(name: .userDidLoginNotif, object: nil, userInfo: [kUSER_ID: self.currentId()])
+                NotificationCenter.default.post(name: .userDidLoginNotif, object: nil, userInfo: [kUSER_ID: self.currentUserId()])
             }
             
             completion(error)
@@ -138,7 +138,7 @@ class DatabaseService {
     }
     
     private func saveUserInFirestore(_ user: User) {
-        reference(.User).document(user.objectId).setData(user.toDictionary()) { (error) in
+        reference(.User).document(user.id).setData(user.toDictionary()) { (error) in
             if let error = error {
                 print(error.localizedDescription)
             }

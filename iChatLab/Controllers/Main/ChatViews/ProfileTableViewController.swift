@@ -42,10 +42,10 @@ class ProfileTableViewController: UITableViewController {
     
     @IBAction func blockUserButtonPressed(_ sender: Any) {
         // - Get current blocked Ids
-        let selectedUserBlockedId = user.objectId
+        let selectedUserBlockedId = user.id
         
         // - Check current blocked Ids and current user objectId
-        var currentUsersBlockedId = dbService.currentUser()!.blockedUsers
+        var currentUsersBlockedId = dbService.currentUser()!.blockedUsersId
         if !currentUsersBlockedId.contains(selectedUserBlockedId) {
             currentUsersBlockedId.append(selectedUserBlockedId)
         }
@@ -101,7 +101,7 @@ class ProfileTableViewController: UITableViewController {
     }
  
     private func updateBlockUserButton() {
-        if user.objectId == dbService.currentId() {
+        if user.id == dbService.currentUserId() {
             callButton.isHidden = true
             messageButton.isHidden = true
             blockButton.isHidden = true
@@ -111,7 +111,7 @@ class ProfileTableViewController: UITableViewController {
             blockButton.isHidden = false
         }
         
-        if dbService.currentUser()!.blockedUsers.contains(user.objectId) {
+        if dbService.currentUser()!.blockedUsersId.contains(user.id) {
             blockButton.setTitle("Unblock User", for: .normal)
         } else {
             blockButton.setTitle("Block User", for: .normal)

@@ -10,7 +10,7 @@ import Foundation
 import Firebase
 
 struct User {
-    let objectId: String
+    let id: String
     var pushId: String?
     
     let createdAt: Date
@@ -30,10 +30,10 @@ struct User {
     
     var isOnline: Bool
     var contacts: [String]
-    var blockedUsers: [String]
+    var blockedUsersId: [String]
     
     init(objectId: String, pushId: String?, createdAt: Date, updatedAt: Date, email: String, firstName: String, lastName: String, avatar: String = "", phoneNumber: String, country: String, city: String, loginMethod: String) {
-        self.objectId = objectId
+        self.id = objectId
         self.pushId = pushId
         
         self.createdAt = createdAt
@@ -53,11 +53,11 @@ struct User {
         
         self.isOnline = true
         self.contacts = []
-        self.blockedUsers = []
+        self.blockedUsersId = []
     }
     
     init(dictionary: [String:Any]) {
-        self.objectId = dictionary[kOBJECT_ID] as! String
+        self.id = dictionary[kOBJECT_ID] as! String
         self.pushId = dictionary[kPUSH_ID] as? String
         
         if let createdAt = dictionary[kCREATED_AT] as? String {
@@ -135,15 +135,15 @@ struct User {
             self.contacts = []
         }
         if let blockedUsers = dictionary[kBLOCKED_USER_ID] as? [String] {
-            self.blockedUsers = blockedUsers
+            self.blockedUsersId = blockedUsers
         } else {
-            self.blockedUsers = []
+            self.blockedUsersId = []
         }
     }
     
     func toDictionary() -> [String:Any] {
         return [
-            kOBJECT_ID: self.objectId,
+            kOBJECT_ID: self.id,
             kPUSH_ID: self.pushId!,
             
             kCREATED_AT: Date.dateFormatter().string(from: self.createdAt),
@@ -163,7 +163,7 @@ struct User {
             
             kIS_ONLINE: self.isOnline,
             kCONTACT: self.contacts,
-            kBLOCKED_USER_ID: self.blockedUsers
+            kBLOCKED_USER_ID: self.blockedUsersId
         ]
     }
 }

@@ -194,8 +194,12 @@ class ChattingViewController: JSQMessagesViewController, CLLocationManagerDelega
             self.present(moviePlayer, animated: true) {
                 moviePlayer.player!.play()
             }
+        case .location:
+            let mapVC = Storyboard.mapView
+            mapVC.location = message.locationMediaItem?.location
+            self.navigationController?.pushViewController(mapVC, animated: true)
         default:
-            print("Unknown Message Type")
+            print("WARRING! - didTapMessageBubbleAt - Unknown Message Type was tapped")
         }
     }
     

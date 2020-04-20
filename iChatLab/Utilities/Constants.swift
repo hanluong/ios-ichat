@@ -37,12 +37,18 @@ struct Storyboard {
         return vc
     }()
     
+    static let mapView: MapViewController = {
+        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: Storyboard.ID.mapView) as! MapViewController
+        return vc
+    }()
+    
     
     struct ID {
         static let mainView = "mainView"
         static let welcomeView = "welcomeView"
         static let profileView = "profileView"
         static let chattingView = "chattingView"
+        static let mapView = "mapView"
     }
     
     struct Identifier {

@@ -25,6 +25,7 @@
 		9851F160244C049D00E20A84 /* MessageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9851F15F244C049D00E20A84 /* MessageService.swift */; };
 		985282A0241A28C6008CA4B3 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9852829F241A28C6008CA4B3 /* Constants.swift */; };
 		985282A9241A39A4008CA4B3 /* FinishedRegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985282A8241A39A4008CA4B3 /* FinishedRegisterViewController.swift */; };
+		98537E96244D534C00799851 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98537E95244D534C00799851 /* MapViewController.swift */; };
 		9854C4FE2420843100634E93 /* UserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9854C4FD2420843100634E93 /* UserTableViewCell.swift */; };
 		98561670241F8A3D00AE60AA /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9856166F241F8A3D00AE60AA /* SettingsTableViewController.swift */; };
 		985A405F243EF4CA00209334 /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985A405E243EF4CA00209334 /* Camera.swift */; };
@@ -66,6 +67,7 @@
 		9851F15F244C049D00E20A84 /* MessageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageService.swift; sourceTree = "<group>"; };
 		9852829F241A28C6008CA4B3 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		985282A8241A39A4008CA4B3 /* FinishedRegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinishedRegisterViewController.swift; sourceTree = "<group>"; };
+		98537E95244D534C00799851 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		9854C4FD2420843100634E93 /* UserTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTableViewCell.swift; sourceTree = "<group>"; };
 		9856166F241F8A3D00AE60AA /* SettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
 		985A405E243EF4CA00209334 /* Camera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
@@ -203,6 +205,7 @@
 				9850D76A2420AD6F005DBE14 /* UsersTableViewController.swift */,
 				984A991424285A9E00FDB301 /* ProfileTableViewController.swift */,
 				98F7CBFF242B488E003CA84C /* ChattingViewController.swift */,
+				98537E95244D534C00799851 /* MapViewController.swift */,
 			);
 			path = ChatViews;
 			sourceTree = "<group>";
@@ -391,6 +394,7 @@
 				98F919C42418F35200B71450 /* AppDelegate.swift in Sources */,
 				985282A9241A39A4008CA4B3 /* FinishedRegisterViewController.swift in Sources */,
 				9850D76B2420AD6F005DBE14 /* UsersTableViewController.swift in Sources */,
+				98537E96244D534C00799851 /* MapViewController.swift in Sources */,
 				98F7CC00242B488E003CA84C /* ChattingViewController.swift in Sources */,
 				98BB7A3E2422AE1B0059581F /* LoginViewController.swift in Sources */,
 				985A405F243EF4CA00209334 /* Camera.swift in Sources */,

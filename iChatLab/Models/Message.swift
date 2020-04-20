@@ -136,7 +136,7 @@ class Message: JSQMessage, Comparable {
         return Date.dateFormatter().string(from: lhs.date) > Date.dateFormatter().string(from: rhs.date)
     }
     
-    func downloadJSQMediaItem(completion: @escaping (_ success: Bool) -> Void) {
+    func loadJSQMediaItem(completion: @escaping (_ success: Bool) -> Void) {
         if self.type == .photo || self.type == .video || self.type == .audio {
             let downloadedFileName = (self.mediaURL.components(separatedBy: "%").last!).components(separatedBy: "?").first!
             var localMediaURL = Common.getCurrentDocumentURL()
@@ -157,8 +157,9 @@ class Message: JSQMessage, Comparable {
                 completion(true)
             }
         } else if self.type == .location {
-            self.locationMediaItem?.setLocation(CLLocation(latitude: self.latitude, longitude: self.longitude), withCompletionHandler: nil)
-            completion(true)
+            self.locationMediaItem!.setLocation(CLLocation(latitude: self.latitude, longitude: self.longitude)) {
+                completion(true)
+            }
         }
         else {
             completion(false)

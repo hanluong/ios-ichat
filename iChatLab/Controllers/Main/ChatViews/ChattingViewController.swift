@@ -319,7 +319,7 @@ class ChattingViewController: JSQMessagesViewController, CLLocationManagerDelega
             for document in snapshot.documents {
                 let messageDict = document.data()
                 if let message = Message(messageDict) {
-                    message.downloadJSQMediaItem { (success) in
+                    message.loadJSQMediaItem { (success) in
                         if success {
                             DispatchQueue.main.async {
                                 self.collectionView.reloadData()
@@ -368,7 +368,7 @@ class ChattingViewController: JSQMessagesViewController, CLLocationManagerDelega
         var count = 0
         while self.loadedMessages.count > 0 &&  count < kMESSAGE_NUM_DEFAULT_LOAD_ON_SCREEN {
             let message = self.loadedMessages.popLast()!
-            message.downloadJSQMediaItem { (success) in
+            message.loadJSQMediaItem { (success) in
                 if success {
                     DispatchQueue.main.async {
                         self.collectionView.reloadData()
@@ -397,22 +397,16 @@ class ChattingViewController: JSQMessagesViewController, CLLocationManagerDelega
                 if diff.type == .added {
                     let messageDict = diff.document.data()
                     if let message = Message(messageDict) {
-                        if message.type == .location {
-                            message.locationMediaItem?.setLocation(self.locationManager.location!, withCompletionHandler: {
-                                self.collectionView.reloadData()
-                            })
-                        } else {
-                            message.downloadJSQMediaItem { (success) in
-                                if success {
-                                    DispatchQueue.main.async {
-                                        self.collectionView.reloadData()
-                                    }
+                        message.loadJSQMediaItem { (success) in
+                            if success {
+                                DispatchQueue.main.async {
+                                    self.collectionView.reloadData()
                                 }
                             }
-                            self.messages.append(message)
-                            JSQSystemSoundPlayer.jsq_playMessageSentSound()
-                            self.finishSendingMessage(animated: true)
                         }
+                        self.messages.append(message)
+                        JSQSystemSoundPlayer.jsq_playMessageSentSound()
+                        self.finishSendingMessage(animated: true)
                     }
                 }
             }
@@ -421,7 +415,6 @@ class ChattingViewController: JSQMessagesViewController, CLLocationManagerDelega
             }
         }
     }
-    
 }
 
 // MARK: - Implement UIImagePickerControllerDelegate, UINavigationControllerDelegate

@@ -30,12 +30,17 @@ class ChattingViewController: JSQMessagesViewController, CLLocationManagerDelega
     private var loadedMessages = [Message]()
     private var messages = [Message]()
     private var members = [User]()
+    private var newChatListener: ListenerRegistration?
     
     var outgoingMessagesBubbleImage = JSQMessagesBubbleImageFactory().outgoingMessagesBubbleImage(with: UIColor.jsq_messageBubbleBlue())
     var incomingMessaageBubbleImage = JSQMessagesBubbleImageFactory().incomingMessagesBubbleImage(with: UIColor.jsq_messageBubbleLightGray())
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // add view tap gesture recognizer to dismiss keyboard
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.hideKeyboard))
+        self.view.addGestureRecognizer(tapGesture)
         
         locationManager = CLLocationManager()
         locationManager.delegate = self
@@ -165,7 +170,8 @@ class ChattingViewController: JSQMessagesViewController, CLLocationManagerDelega
     }
     
     override func collectionView(_ collectionView: JSQMessagesCollectionView!, attributedTextForCellBottomLabelAt indexPath: IndexPath!) -> NSAttributedString! {
-        if indexPath.row == self.messages.count - 1 {
+        // show message status for Outgoing message
+        if indexPath.row == self.messages.count - 1 && self.messages[indexPath.row].senderId == self.senderId {
             return NSAttributedString(string: self.messages[indexPath.row].status.rawValue, attributes: [.foregroundColor: UIColor(red: 83/255, green: 107/255, blue: 198/255, alpha: 1)])
         } else {
             return nil
@@ -204,6 +210,10 @@ class ChattingViewController: JSQMessagesViewController, CLLocationManagerDelega
     }
     
     // MARK: - Helpers function
+    @objc func hideKeyboard() {
+        self.view.endEditing(true)
+    }
+    
     private func haveAccessLocation() -> Bool {
         if locationManager != nil {
             return true
@@ -311,7 +321,14 @@ class ChattingViewController: JSQMessagesViewController, CLLocationManagerDelega
     }
     
     @objc func backBarButtonPressed(_ sender: Any) {
+        removeListeners()
         self.navigationController?.popViewController(animated: true)
+    }
+    
+    private func removeListeners() {
+        if let newChatListener = newChatListener {
+            newChatListener.remove()
+        }
     }
     
     private func loadMessages() {
@@ -323,7 +340,7 @@ class ChattingViewController: JSQMessagesViewController, CLLocationManagerDelega
             for document in snapshot.documents {
                 let messageDict = document.data()
                 if let message = Message(messageDict) {
-                    message.loadJSQMediaItem { (success) in
+                    message.loadJSQMediaItem(membersId: self.membersIdToPush) { (success) in
                         if success {
                             DispatchQueue.main.async {
                                 self.collectionView.reloadData()
@@ -372,7 +389,7 @@ class ChattingViewController: JSQMessagesViewController, CLLocationManagerDelega
         var count = 0
         while self.loadedMessages.count > 0 &&  count < kMESSAGE_NUM_DEFAULT_LOAD_ON_SCREEN {
             let message = self.loadedMessages.popLast()!
-            message.loadJSQMediaItem { (success) in
+            message.loadJSQMediaItem(membersId: self.membersIdToPush) { (success) in
                 if success {
                     DispatchQueue.main.async {
                         self.collectionView.reloadData()
@@ -393,15 +410,15 @@ class ChattingViewController: JSQMessagesViewController, CLLocationManagerDelega
         } else {
             query = reference(.Message).document(senderId).collection(chatRoomId)
         }
-        query.addSnapshotListener { (snapshots, error) in
+        newChatListener = query.addSnapshotListener { (snapshots, error) in
             guard let snapshots = snapshots, error == nil else {
                 fatalError("ERROR! to listen chatting message: \(error!.localizedDescription)")
             }
             for diff in snapshots.documentChanges {
-                if diff.type == .added {
-                    let messageDict = diff.document.data()
-                    if let message = Message(messageDict) {
-                        message.loadJSQMediaItem { (success) in
+                let messageDict = diff.document.data()
+                if let message = Message(messageDict) {
+                    if diff.type == .added {
+                        message.loadJSQMediaItem(membersId: self.membersIdToPush) { (success) in
                             if success {
                                 DispatchQueue.main.async {
                                     self.collectionView.reloadData()
@@ -412,10 +429,19 @@ class ChattingViewController: JSQMessagesViewController, CLLocationManagerDelega
                         JSQSystemSoundPlayer.jsq_playMessageSentSound()
                         self.finishSendingMessage(animated: true)
                     }
+                    else {
+                        // for update message status
+                        self.messages.forEach { tmpMessage in
+                            if tmpMessage.id == message.id {
+                                tmpMessage.status = message.status
+                                DispatchQueue.main.async {
+                                    self.collectionView.reloadData()
+                                }
+                            }
+                        }
+                    }
+                    
                 }
-            }
-            DispatchQueue.main.async {
-                self.collectionView.reloadData()
             }
         }
     }

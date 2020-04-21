@@ -25,6 +25,7 @@ enum MessageStatus: String {
 }
 
 class Message: JSQMessage, Comparable {
+    private let messageService = MessageService.instance
     /* Note:
      * Reference at https://gitlab.mobisapps.com/knevedrov/chatIt/blob/develop/SwiftExample/SwiftExample/ChatViewController.swift
      */
@@ -136,7 +137,7 @@ class Message: JSQMessage, Comparable {
         return Date.dateFormatter().string(from: lhs.date) > Date.dateFormatter().string(from: rhs.date)
     }
     
-    func loadJSQMediaItem(completion: @escaping (_ success: Bool) -> Void) {
+    func loadJSQMediaItem(membersId: [String], completion: @escaping (_ success: Bool) -> Void) {
         if self.type == .photo || self.type == .video || self.type == .audio {
             let downloadedFileName = (self.mediaURL.components(separatedBy: "%").last!).components(separatedBy: "?").first!
             var localMediaURL = Common.getCurrentDocumentURL()
@@ -149,24 +150,38 @@ class Message: JSQMessage, Comparable {
                         return
                     }
                     try! data.write(to: localMediaURL, options: .atomic)
-                    self.setValueForMediaItem(localMediaURL)
-                    completion(true)
+                    self.setValueForMediaItem(localMediaURL) { success in
+                        if success {
+                            self.updateMessageStatus { (finished) in
+                                completion(finished)
+                            }
+                        }
+                    }
                 }
             } else {
-                setValueForMediaItem(localMediaURL)
-                completion(true)
+                setValueForMediaItem(localMediaURL) { success in
+                    if success {
+                        self.updateMessageStatus { (finished) in
+                            completion(finished)
+                        }
+                    }
+                }
             }
         } else if self.type == .location {
             self.locationMediaItem!.setLocation(CLLocation(latitude: self.latitude, longitude: self.longitude)) {
-                completion(true)
+                self.updateMessageStatus { (finished) in
+                    completion(finished)
+                }
             }
         }
         else {
-            completion(false)
+            self.updateMessageStatus { (finished) in
+                completion(finished)
+            }
         }
     }
     
-    private func setValueForMediaItem(_ fileURL: URL) {
+    private func setValueForMediaItem(_ fileURL: URL, completion: @escaping (_ success: Bool) -> Void) {
         switch self.type {
         case .photo:
             self.photoMediaItem?.image = UIImage(contentsOfFile: fileURL.path)
@@ -181,6 +196,8 @@ class Message: JSQMessage, Comparable {
         default:
             print("Unknown Message Type to setValueForMediaItem()")
         }
+        
+        completion(true)
     }
     
     private func toDict() -> [String:Any] {
@@ -201,7 +218,7 @@ class Message: JSQMessage, Comparable {
     
     func sendMessageTo(membersIdToPush: [String]) {
         for memberId in membersIdToPush {
-            reference(.Message).document(memberId).collection(chatRoomId).document().setData(self.toDict()) { error in
+            reference(.Message).document(memberId).collection(chatRoomId).document(id).setData(self.toDict()) { error in
                 if let error = error {
                     fatalError("ERROR! sendMessageTo(membersIdToPush:): \(error.localizedDescription)")
                 }
@@ -209,4 +226,16 @@ class Message: JSQMessage, Comparable {
         }
     }
     
+    func updateMessageStatus(completion: @escaping (_ success: Bool) -> Void) {
+        if self.senderId == DatabaseService.instance.currentUserId() {
+            // Outgoing message
+            self.status = .sent
+        } else {
+            // Incoming message
+            self.status = .delivered
+        }
+        messageService.update(message: self) { (finished) in
+            completion(finished)
+        }
+    }
 }

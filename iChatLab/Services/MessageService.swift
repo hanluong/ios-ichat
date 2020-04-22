@@ -11,11 +11,11 @@ import Foundation
 class MessageService {
     static let instance = MessageService()
     
-    func update(message: Message, completion: @escaping (_ finished: Bool) -> Void) {
-        let updatedData: [String:Any] = [
-            kMESSAGE_STATUS: message.status.rawValue
-        ]
-        reference(.Message).document(message.senderId).collection(message.chatRoomId).document(message.id).updateData(updatedData) { (error) in
+    /*
+     * Update ONLY for outgoing message
+     */
+    func update(message: Message, data: [String:Any], completion: @escaping (_ finished: Bool) -> Void) {
+        reference(.Message).document(message.senderId).collection(message.chatRoomId).document(message.id).updateData(data) { (error) in
             if let error = error {
                 print("ERROR! updateMessageStatus(membersIdToPush:): \(error.localizedDescription)")
                 completion(false)

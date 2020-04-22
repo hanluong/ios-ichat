@@ -13,43 +13,34 @@ public let userDefaults = UserDefaults.standard
 
 // Storyboard
 struct Storyboard {
-
+        
     static let mainView: UIViewController = {
-         let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: Storyboard.ID.mainView) as! UITabBarController
+         let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "mainView") as! UITabBarController
         vc.modalPresentationStyle = .fullScreen
         return vc
     }()
     
     static let welcomeView: WelcomeViewController = {
-        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: Storyboard.ID.welcomeView) as! WelcomeViewController
+        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "welcomeView") as! WelcomeViewController
         vc.modalPresentationStyle = .fullScreen
         return vc
     }()
     
     static let profileView: ProfileTableViewController = {
-        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: Storyboard.ID.profileView) as! ProfileTableViewController
+        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "profileView") as! ProfileTableViewController
         vc.modalPresentationStyle = .fullScreen
         return vc
     }()
     
     static let chattingView: ChattingViewController = {
-        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: Storyboard.ID.chattingView) as! ChattingViewController
+        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: "chattingView") as! ChattingViewController
         return vc
     }()
     
     static let mapView: MapViewController = {
-        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: Storyboard.ID.mapView) as! MapViewController
+        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: "mapView") as! MapViewController
         return vc
     }()
-    
-    
-    struct ID {
-        static let mainView = "mainView"
-        static let welcomeView = "welcomeView"
-        static let profileView = "profileView"
-        static let chattingView = "chattingView"
-        static let mapView = "mapView"
-    }
     
     struct Identifier {
         struct Cell {

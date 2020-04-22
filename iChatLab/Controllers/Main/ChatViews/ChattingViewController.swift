@@ -30,7 +30,11 @@ class ChattingViewController: JSQMessagesViewController, CLLocationManagerDelega
     private var loadedMessages = [Message]()
     private var messages = [Message]()
     private var members = [User]()
+    
     private var newChatListener: ListenerRegistration?
+    private var typingListener: ListenerRegistration?
+    
+    var numTyping = 0
     
     var outgoingMessagesBubbleImage = JSQMessagesBubbleImageFactory().outgoingMessagesBubbleImage(with: UIColor.jsq_messageBubbleBlue())
     var incomingMessaageBubbleImage = JSQMessagesBubbleImageFactory().incomingMessagesBubbleImage(with: UIColor.jsq_messageBubbleLightGray())
@@ -58,6 +62,7 @@ class ChattingViewController: JSQMessagesViewController, CLLocationManagerDelega
                 self.loadMessages()
             }
         }
+        createTypingObserver()
     }
     
     // MARK: - Implement chatting
@@ -82,10 +87,8 @@ class ChattingViewController: JSQMessagesViewController, CLLocationManagerDelega
                 message.sendMessageTo(membersIdToPush: self.membersIdToPush)
             }
         }
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (action) in
-            // TODO: set cancel action
-            print("Cancel")
-        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        
         cameraAction.setValue(UIImage(named: "camera"), forKey: "image")
         photoAction.setValue(UIImage(named: "picture"), forKey: "image")
         videoAction.setValue(UIImage(named: "video"), forKey: "image")
@@ -105,6 +108,11 @@ class ChattingViewController: JSQMessagesViewController, CLLocationManagerDelega
         } else {
             self.updateSendButton(isEnable: false)
         }
+    }
+    
+    override func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        startTypingCounter()
+        return true
     }
     
     override func didPressSend(_ button: UIButton!, withMessageText text: String!, senderId: String!, senderDisplayName: String!, date: Date!) {
@@ -445,6 +453,50 @@ class ChattingViewController: JSQMessagesViewController, CLLocationManagerDelega
             }
         }
     }
+    
+    // Typing helpers
+    func createTypingObserver() {
+        typingListener = reference(.Typing).document(self.chatRoomId).addSnapshotListener { (snapshot, error) in
+            guard let snapshot = snapshot, error == nil else {
+                print("ERROR! failed to listen typing indicator")
+                return
+            }
+            
+            if snapshot.exists {
+                for data in snapshot.data()! {
+                    if data.key != self.dbService.currentUserId() {
+                        // show typing idicator
+                        let isTyping = data.value as! Bool
+                        self.showTypingIndicator = isTyping
+                        self.scrollToBottom(animated: isTyping)
+                    }
+                }
+            } else {
+                reference(.Typing).document(self.chatRoomId).setData([self.dbService.currentUserId(): false])
+            }
+        }
+    }
+    
+    func startTypingCounter() {
+        numTyping += 1
+        saveTypingForCurrentUserToFirestore(value: true)
+        
+        // remove typing indicator when stop after 2s
+        self.perform(#selector(self.stopTypingCounter), with: nil, afterDelay: 2.0)
+    }
+    
+    @objc func stopTypingCounter() {
+        numTyping -= 1
+        if numTyping == 0 {
+            saveTypingForCurrentUserToFirestore(value: false)
+        }
+    }
+    
+    func saveTypingForCurrentUserToFirestore(value: Bool) {
+        reference(.Typing).document(self.chatRoomId).updateData([self.dbService.currentUserId(): value])
+    }
+    
+    
 }
 
 // MARK: - Implement UIImagePickerControllerDelegate, UINavigationControllerDelegate

@@ -21,7 +21,7 @@ enum MessageType: String {
 enum MessageStatus: String {
     case sending
     case sent
-    case delivered
+    case read
 }
 
 class Message: JSQMessage, Comparable {
@@ -227,14 +227,17 @@ class Message: JSQMessage, Comparable {
     }
     
     func updateMessageStatus(completion: @escaping (_ success: Bool) -> Void) {
-        if self.senderId == DatabaseService.instance.currentUserId() {
+        if self.senderId == DatabaseService.instance.currentUserId() && self.status != .read {
             // Outgoing message
             self.status = .sent
         } else {
             // Incoming message
-            self.status = .delivered
+            self.status = .read
         }
-        messageService.update(message: self) { (finished) in
+        let updatedData: [String:Any] = [
+            kMESSAGE_STATUS: self.status.rawValue
+        ]
+        messageService.update(message: self, data: updatedData) { (finished) in
             completion(finished)
         }
     }

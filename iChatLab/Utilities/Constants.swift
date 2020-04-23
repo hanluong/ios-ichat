@@ -42,8 +42,8 @@ struct Storyboard {
         return vc
     }()
     
-    static let infoView: MediasCollectionViewController = {
-        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: "infoView") as! MediasCollectionViewController
+    static let infoView: PhotosMediaCollectionViewController = {
+        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: "infoView") as! PhotosMediaCollectionViewController
         return vc
      }()
     
@@ -52,6 +52,7 @@ struct Storyboard {
             static let user = "userCell"
             static let setting = "settingCell"
             static let recent = "recentCell"
+            static let photoMedia = "photoCell"
         }
         struct Segue {
             static let goTiFinishedRegisterVC = "goToFinishedRegisterViewController"

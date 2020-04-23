@@ -821,10 +821,10 @@
             </objects>
             <point key="canvasLocation" x="6498" y="148"/>
         </scene>
-        <!--Medias Collection View Controller-->
+        <!--Photos Media Collection View Controller-->
         <scene sceneID="8Mx-6R-Hts">
             <objects>
-                <collectionViewController storyboardIdentifier="infoView" id="Zbr-aD-8Ba" customClass="MediasCollectionViewController" customModule="iChatLab" customModuleProvider="target" sceneMemberID="viewController">
+                <collectionViewController storyboardIdentifier="infoView" id="Zbr-aD-8Ba" customClass="PhotosMediaCollectionViewController" customModule="iChatLab" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="s8d-Jo-gv5">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -836,7 +836,7 @@
                             <inset key="sectionInset" minX="10" minY="0.0" maxX="10" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Cell" id="Dif-Lf-QeL" customClass="MediaItemCollectionViewCell" customModule="iChatLab" customModuleProvider="target">
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="photoCell" id="Dif-Lf-QeL" customClass="PhotoMediaItemCollectionViewCell" customModule="iChatLab" customModuleProvider="target">
                                 <rect key="frame" x="10" y="0.0" width="128" height="128"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Qvq-fb-QN9">

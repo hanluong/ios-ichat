@@ -1,5 +1,5 @@
 //
-//  MediasCollectionViewController.swift
+//  PhotosMediaCollectionViewController.swift
 //  iChatLab
 //
 //  Created by Han Luong on 4/23/20.
@@ -9,9 +9,7 @@
 import UIKit
 import SKPhotoBrowser
 
-private let reuseIdentifier = "Cell"
-
-class MediasCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
+class PhotosMediaCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
 
     var chatRoomId: String!
     private let dbService = DatabaseService.instance
@@ -30,13 +28,12 @@ class MediasCollectionViewController: UICollectionViewController, UICollectionVi
         return 1
     }
 
-
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.listImages.count
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? MediaItemCollectionViewCell else { return UICollectionViewCell() }
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Storyboard.Identifier.Cell.photoMedia, for: indexPath) as? PhotoMediaItemCollectionViewCell else { return UICollectionViewCell() }
         let image = self.listImages[indexPath.item]
         cell.configurationView(image: image)
     

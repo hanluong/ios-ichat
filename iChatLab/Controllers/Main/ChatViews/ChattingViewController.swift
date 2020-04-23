@@ -30,10 +30,12 @@ class ChattingViewController: JSQMessagesViewController, CLLocationManagerDelega
     private var loadedMessages = [Message]()
     private var messages = [Message]()
     private var members = [User]()
+    private var avatarImageDict: NSMutableDictionary = [:]
     
     private var newChatListener: ListenerRegistration?
     private var typingListener: ListenerRegistration?
     
+    var enableChattingAvatar = true
     var numTyping = 0
     
     var outgoingMessagesBubbleImage = JSQMessagesBubbleImageFactory().outgoingMessagesBubbleImage(with: UIColor.jsq_messageBubbleBlue())
@@ -60,6 +62,7 @@ class ChattingViewController: JSQMessagesViewController, CLLocationManagerDelega
             if success {
                 self.setupUI()
                 self.loadMessages()
+                self.loadAvatarImages()
             }
         }
         createTypingObserver()
@@ -131,7 +134,11 @@ class ChattingViewController: JSQMessagesViewController, CLLocationManagerDelega
     }
     
     override func collectionView(_ collectionView: JSQMessagesCollectionView!, avatarImageDataForItemAt indexPath: IndexPath!) -> JSQMessageAvatarImageDataSource! {
-        return nil
+        let message = self.messages[indexPath.row]
+        if let avatarImage = self.avatarImageDict.value(forKey: message.senderId) as? JSQMessageAvatarImageDataSource {
+            return avatarImage
+        }
+        return JSQMessagesAvatarImageFactory.avatarImage(with: UIImage(named: "avatarPlaceholder"), diameter: UInt(2.0 * kJSQMessagesCollectionViewAvatarSizeDefault))
     }
     
     override func collectionView(_ collectionView: JSQMessagesCollectionView!, messageBubbleImageDataForItemAt indexPath: IndexPath!) -> JSQMessageBubbleImageDataSource! {
@@ -337,6 +344,25 @@ class ChattingViewController: JSQMessagesViewController, CLLocationManagerDelega
         if let newChatListener = newChatListener {
             newChatListener.remove()
         }
+        if let typingListener = typingListener {
+            typingListener.remove()
+        }
+    }
+    
+    private func loadAvatarImages() {
+        if enableChattingAvatar {
+            self.collectionView.collectionViewLayout.incomingAvatarViewSize = CGSize(width: kJSQMessagesCollectionViewAvatarSizeDefault, height: kJSQMessagesCollectionViewAvatarSizeDefault)
+            self.collectionView.collectionViewLayout.outgoingAvatarViewSize = CGSize(width: kJSQMessagesCollectionViewAvatarSizeDefault, height: kJSQMessagesCollectionViewAvatarSizeDefault)
+        }
+        
+        self.members.forEach { user in
+            let image = Common.imageFromdata(imageData: user.avatar)
+            let userAvatar = JSQMessagesAvatarImageFactory.avatarImage(with: image, diameter: UInt(2.0*kJSQMessagesCollectionViewAvatarSizeDefault))
+            
+            self.avatarImageDict.setValue(userAvatar, forKey: user.id)
+        }
+        
+        self.collectionView.reloadData()
     }
     
     private func loadMessages() {

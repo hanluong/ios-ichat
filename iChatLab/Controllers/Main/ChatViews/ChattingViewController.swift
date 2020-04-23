@@ -321,8 +321,9 @@ class ChattingViewController: JSQMessagesViewController, CLLocationManagerDelega
     }
     
     @objc func infoButtonPressed() {
-        // TODO: set infoButtonPressed
-        print("infoButtonPressed() ......")
+        let infoView = Storyboard.infoView
+        infoView.chatRoomId = self.chatRoomId
+        self.navigationController?.pushViewController(infoView, animated: true)
     }
     
     @objc func avatartButtonTapped() {

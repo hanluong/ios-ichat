@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="24O-x2-o1Z">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="24O-x2-o1Z">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -820,6 +821,54 @@
             </objects>
             <point key="canvasLocation" x="6498" y="148"/>
         </scene>
+        <!--Medias Collection View Controller-->
+        <scene sceneID="8Mx-6R-Hts">
+            <objects>
+                <collectionViewController storyboardIdentifier="infoView" id="Zbr-aD-8Ba" customClass="MediasCollectionViewController" customModule="iChatLab" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="s8d-Jo-gv5">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="MZG-NQ-hmZ">
+                            <size key="itemSize" width="128" height="128"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="10" minY="0.0" maxX="10" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <cells>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Cell" id="Dif-Lf-QeL" customClass="MediaItemCollectionViewCell" customModule="iChatLab" customModuleProvider="target">
+                                <rect key="frame" x="10" y="0.0" width="128" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Qvq-fb-QN9">
+                                    <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ORM-Jc-dza">
+                                            <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                        </imageView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="ORM-Jc-dza" firstAttribute="leading" secondItem="Qvq-fb-QN9" secondAttribute="leading" id="9mD-Ai-Ip9"/>
+                                        <constraint firstAttribute="trailing" secondItem="ORM-Jc-dza" secondAttribute="trailing" id="OI8-iK-dAA"/>
+                                        <constraint firstItem="ORM-Jc-dza" firstAttribute="top" secondItem="Qvq-fb-QN9" secondAttribute="top" id="gNI-yH-6Lv"/>
+                                        <constraint firstAttribute="bottom" secondItem="ORM-Jc-dza" secondAttribute="bottom" id="mrR-sb-Uzn"/>
+                                    </constraints>
+                                </collectionViewCellContentView>
+                                <connections>
+                                    <outlet property="mediaImageView" destination="ORM-Jc-dza" id="3YS-Yn-5T3"/>
+                                </connections>
+                            </collectionViewCell>
+                        </cells>
+                        <connections>
+                            <outlet property="dataSource" destination="Zbr-aD-8Ba" id="6d6-TE-vfM"/>
+                            <outlet property="delegate" destination="Zbr-aD-8Ba" id="KaQ-Xq-nOq"/>
+                        </connections>
+                    </collectionView>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="2U4-o0-on5" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="7260.8695652173919" y="-200.22321428571428"/>
+        </scene>
         <!--Map View Controller-->
         <scene sceneID="UVc-p6-lEh">
             <objects>
@@ -847,7 +896,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ERY-bV-qzi" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="7265.217391304348" y="154.6875"/>
+            <point key="canvasLocation" x="7272" y="447"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="hJ9-JA-PAv">

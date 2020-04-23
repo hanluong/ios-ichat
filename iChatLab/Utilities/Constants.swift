@@ -42,6 +42,11 @@ struct Storyboard {
         return vc
     }()
     
+    static let infoView: MediasCollectionViewController = {
+        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: "infoView") as! MediasCollectionViewController
+        return vc
+     }()
+    
     struct Identifier {
         struct Cell {
             static let user = "userCell"

@@ -19,6 +19,8 @@
 		984CC666241B0B6500933D4C /* Date+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984CC665241B0B6500933D4C /* Date+Ext.swift */; };
 		984CE0B1241C8B8C0057AC92 /* Notification+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984CE0B0241C8B8C0057AC92 /* Notification+Ext.swift */; };
 		984D615C2429AE3D00320762 /* Recent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984D615B2429AE3D00320762 /* Recent.swift */; };
+		984E183A2451F58500E11389 /* MediasCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984E18392451F58500E11389 /* MediasCollectionViewController.swift */; };
+		984E183C2451F5AB00E11389 /* MediaItemCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984E183B2451F5AB00E11389 /* MediaItemCollectionViewCell.swift */; };
 		984E3BB62424657600E68502 /* ViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984E3BB52424657600E68502 /* ViewPresenter.swift */; };
 		984E4BAE242B38960061F3F1 /* CallViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984E4BAD242B38960061F3F1 /* CallViewController.swift */; };
 		9850D76B2420AD6F005DBE14 /* UsersTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9850D76A2420AD6F005DBE14 /* UsersTableViewController.swift */; };
@@ -61,6 +63,8 @@
 		984CC665241B0B6500933D4C /* Date+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Ext.swift"; sourceTree = "<group>"; };
 		984CE0B0241C8B8C0057AC92 /* Notification+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+Ext.swift"; sourceTree = "<group>"; };
 		984D615B2429AE3D00320762 /* Recent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recent.swift; sourceTree = "<group>"; };
+		984E18392451F58500E11389 /* MediasCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediasCollectionViewController.swift; sourceTree = "<group>"; };
+		984E183B2451F5AB00E11389 /* MediaItemCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaItemCollectionViewCell.swift; sourceTree = "<group>"; };
 		984E3BB52424657600E68502 /* ViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewPresenter.swift; sourceTree = "<group>"; };
 		984E4BAD242B38960061F3F1 /* CallViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallViewController.swift; sourceTree = "<group>"; };
 		9850D76A2420AD6F005DBE14 /* UsersTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersTableViewController.swift; sourceTree = "<group>"; };
@@ -169,6 +173,7 @@
 			children = (
 				9854C4FD2420843100634E93 /* UserTableViewCell.swift */,
 				984C1A74242F513C00ADCE86 /* RecentTableViewCell.swift */,
+				984E183B2451F5AB00E11389 /* MediaItemCollectionViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -205,6 +210,7 @@
 				9850D76A2420AD6F005DBE14 /* UsersTableViewController.swift */,
 				984A991424285A9E00FDB301 /* ProfileTableViewController.swift */,
 				98F7CBFF242B488E003CA84C /* ChattingViewController.swift */,
+				984E18392451F58500E11389 /* MediasCollectionViewController.swift */,
 				98537E95244D534C00799851 /* MapViewController.swift */,
 			);
 			path = ChatViews;
@@ -381,6 +387,7 @@
 				98BB7A422422B0810059581F /* Common.swift in Sources */,
 				98BB7A3A2422A4C50059581F /* UIButton+Ext.swift in Sources */,
 				988D40EC2436FB46006FCC89 /* Array+Ext.swift in Sources */,
+				984E183A2451F58500E11389 /* MediasCollectionViewController.swift in Sources */,
 				984C1D4D242371BB00062791 /* UISegmentedControl+Ext.swift in Sources */,
 				98BB7A402422AEA30059581F /* WelcomeViewController.swift in Sources */,
 				984C1A75242F513C00ADCE86 /* RecentTableViewCell.swift in Sources */,
@@ -401,6 +408,7 @@
 				984C1D4F242377B400062791 /* UIImageView+Ext.swift in Sources */,
 				984D615C2429AE3D00320762 /* Recent.swift in Sources */,
 				98F919C62418F35200B71450 /* SceneDelegate.swift in Sources */,
+				984E183C2451F5AB00E11389 /* MediaItemCollectionViewCell.swift in Sources */,
 				984CC662241AFB9100933D4C /* User.swift in Sources */,
 				984C1D5124237D2900062791 /* RecentsViewController.swift in Sources */,
 				984A991524285A9E00FDB301 /* ProfileTableViewController.swift in Sources */,

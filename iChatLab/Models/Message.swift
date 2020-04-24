@@ -8,7 +8,6 @@
 
 import Foundation
 import JSQMessagesViewController
-import Firebase
 
 enum MessageType: String {
     case text
@@ -25,10 +24,12 @@ enum MessageStatus: String {
 }
 
 class Message: JSQMessage, Comparable {
-    private let messageService = MessageService.instance
+    
     /* Note:
      * Reference at https://gitlab.mobisapps.com/knevedrov/chatIt/blob/develop/SwiftExample/SwiftExample/ChatViewController.swift
      */
+    
+    private let dbService = DatabaseService.instance
     
     let id: String
     let chatRoomId: String
@@ -60,13 +61,13 @@ class Message: JSQMessage, Comparable {
         
         switch type {
         case .photo:
-            self.photoMediaItem = JSQPhotoMediaItem(maskAsOutgoing: DatabaseService.instance.currentUserId() == senderId)
+            self.photoMediaItem = JSQPhotoMediaItem(maskAsOutgoing: dbService.currentUserId() == senderId)
             super.init(senderId: senderId, senderDisplayName: senderDisplayName, date: date, media: self.photoMediaItem)
         case .video:
-            self.videoMediaItem = JSQVideoMediaItem(maskAsOutgoing: DatabaseService.instance.currentUserId() == senderId)
+            self.videoMediaItem = JSQVideoMediaItem(maskAsOutgoing: dbService.currentUserId() == senderId)
             super.init(senderId: senderId, senderDisplayName: senderDisplayName, date: date, media: self.videoMediaItem)
         case .audio:
-            self.audioMediaItem = JSQAudioMediaItem(maskAsOutgoing: DatabaseService.instance.currentUserId() == senderId)
+            self.audioMediaItem = JSQAudioMediaItem(maskAsOutgoing: dbService.currentUserId() == senderId)
             super.init(senderId: senderId, senderDisplayName: senderDisplayName, date: date, media: self.audioMediaItem)
         default:
             super.init(senderId: senderId, senderDisplayName: senderDisplayName, date: date, text: "Unknown MessageType to init")
@@ -109,18 +110,19 @@ class Message: JSQMessage, Comparable {
         case .text:
             super.init(senderId: senderId, senderDisplayName: senderDisplayName, date: Date.dateFormatter().date(from: dateStr), text: text)
         case .photo:
-            self.photoMediaItem = JSQPhotoMediaItem(maskAsOutgoing: DatabaseService.instance.currentUserId() == senderId)
+            self.photoMediaItem = JSQPhotoMediaItem(maskAsOutgoing: dbService.currentUserId() == senderId)
             super.init(senderId: senderId, senderDisplayName: senderDisplayName, date: Date.dateFormatter().date(from: dateStr), media: self.photoMediaItem)
         case .video:
-            self.videoMediaItem = JSQVideoMediaItem(maskAsOutgoing: DatabaseService.instance.currentUserId() == senderId)
+            self.videoMediaItem = JSQVideoMediaItem(maskAsOutgoing: dbService.currentUserId() == senderId)
             super.init(senderId: senderId, senderDisplayName: senderDisplayName, date: Date.dateFormatter().date(from: dateStr), media: self.videoMediaItem)
         case .audio:
             self.audioMediaItem = JSQAudioMediaItem(data: nil)
+            self.audioMediaItem!.appliesMediaViewMaskAsOutgoing = dbService.currentUserId() == senderId
             super.init(senderId: senderId, senderDisplayName: senderDisplayName, date: Date.dateFormatter().date(from: dateStr), media: self.audioMediaItem)
         case .location:
             self.latitude = latitude
             self.longitude = longitude
-            self.locationMediaItem = JSQLocationMediaItem(maskAsOutgoing: DatabaseService.instance.currentUserId() == senderId)
+            self.locationMediaItem = JSQLocationMediaItem(maskAsOutgoing: dbService.currentUserId() == senderId)
             super.init(senderId: senderId, senderDisplayName: senderDisplayName, date: Date.dateFormatter().date(from: dateStr), media: self.locationMediaItem)
         }
     }
@@ -137,70 +139,7 @@ class Message: JSQMessage, Comparable {
         return Date.dateFormatter().string(from: lhs.date) > Date.dateFormatter().string(from: rhs.date)
     }
     
-    func loadJSQMediaItem(membersId: [String], completion: @escaping (_ success: Bool) -> Void) {
-        if self.type == .photo || self.type == .video || self.type == .audio {
-            let downloadedFileName = (self.mediaURL.components(separatedBy: "%").last!).components(separatedBy: "?").first!
-            var localMediaURL = Common.getCurrentDocumentURL()
-            localMediaURL = localMediaURL.appendingPathComponent(downloadedFileName, isDirectory: false)
-            if !Common.doesFileExistsInCurrentDocument(fileName: downloadedFileName) {
-                Storage.storage().reference(forURL: mediaURL).getData(maxSize: INT64_MAX) { (data, error) in
-                    guard let data = data, error == nil else {
-                        print("ERROR! downloading image from url \(self.mediaURL), error: \(error!.localizedDescription)")
-                        completion(false)
-                        return
-                    }
-                    try! data.write(to: localMediaURL, options: .atomic)
-                    self.setValueForMediaItem(localMediaURL) { success in
-                        if success {
-                            self.updateMessageStatus { (finished) in
-                                completion(finished)
-                            }
-                        }
-                    }
-                }
-            } else {
-                setValueForMediaItem(localMediaURL) { success in
-                    if success {
-                        self.updateMessageStatus { (finished) in
-                            completion(finished)
-                        }
-                    }
-                }
-            }
-        } else if self.type == .location {
-            self.locationMediaItem!.setLocation(CLLocation(latitude: self.latitude, longitude: self.longitude)) {
-                self.updateMessageStatus { (finished) in
-                    completion(finished)
-                }
-            }
-        }
-        else {
-            self.updateMessageStatus { (finished) in
-                completion(finished)
-            }
-        }
-    }
-    
-    private func setValueForMediaItem(_ fileURL: URL, completion: @escaping (_ success: Bool) -> Void) {
-        switch self.type {
-        case .photo:
-            self.photoMediaItem?.image = UIImage(contentsOfFile: fileURL.path)
-        case .video:
-            self.videoMediaItem?.fileURL = fileURL
-            self.videoMediaItem?.isReadyToPlay = true
-            self.videoMediaItem?.addThumbnail()
-        case .audio:
-            let audioData = try? Data(contentsOf: fileURL)
-            self.audioMediaItem?.audioData = audioData
-            self.audioMediaItem?.appliesMediaViewMaskAsOutgoing = DatabaseService.instance.currentUserId() == senderId
-        default:
-            print("Unknown Message Type to setValueForMediaItem()")
-        }
-        
-        completion(true)
-    }
-    
-    private func toDict() -> [String:Any] {
+    func toDict() -> [String:Any] {
         return [
             kMESSAGE_ID: self.id,
             kCHATROOM_ID: self.chatRoomId,
@@ -214,31 +153,5 @@ class Message: JSQMessage, Comparable {
             kMESSAGE_TYPE: self.type.rawValue,
             kDATE: Date.dateFormatter().string(from: self.date)
         ]
-    }
-    
-    func sendMessageTo(membersIdToPush: [String]) {
-        for memberId in membersIdToPush {
-            reference(.Message).document(memberId).collection(chatRoomId).document(id).setData(self.toDict()) { error in
-                if let error = error {
-                    fatalError("ERROR! sendMessageTo(membersIdToPush:): \(error.localizedDescription)")
-                }
-            }
-        }
-    }
-    
-    func updateMessageStatus(completion: @escaping (_ success: Bool) -> Void) {
-        if self.senderId == DatabaseService.instance.currentUserId() && self.status != .read {
-            // Outgoing message
-            self.status = .sent
-        } else {
-            // Incoming message
-            self.status = .read
-        }
-        let updatedData: [String:Any] = [
-            kMESSAGE_STATUS: self.status.rawValue
-        ]
-        messageService.update(message: self, data: updatedData) { (finished) in
-            completion(finished)
-        }
     }
 }

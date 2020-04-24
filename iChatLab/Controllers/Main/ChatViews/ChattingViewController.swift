@@ -22,6 +22,8 @@ class ChattingViewController: JSQMessagesViewController, CLLocationManagerDelega
     private var locationManager: CLLocationManager!
     private let dbService = DatabaseService.instance
     private let storageService = StorageService.instance
+    private let messageService = MessageService.instance
+    private let recentService = RecentService.instance
     
     var chatRoomId: String!
     var type: String!
@@ -41,6 +43,7 @@ class ChattingViewController: JSQMessagesViewController, CLLocationManagerDelega
     var outgoingMessagesBubbleImage = JSQMessagesBubbleImageFactory().outgoingMessagesBubbleImage(with: UIColor.jsq_messageBubbleBlue())
     var incomingMessaageBubbleImage = JSQMessagesBubbleImageFactory().incomingMessagesBubbleImage(with: UIColor.jsq_messageBubbleLightGray())
     
+    // MARK: - View lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -68,6 +71,16 @@ class ChattingViewController: JSQMessagesViewController, CLLocationManagerDelega
         createTypingObserver()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        recentService.resetRecentCounterBy(userId: self.senderId)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        recentService.resetRecentCounterBy(userId: self.senderId)
+    }
+    
+    
+    
     // MARK: - Implement chatting
     
     override func didPressAccessoryButton(_ sender: UIButton!) {
@@ -87,7 +100,7 @@ class ChattingViewController: JSQMessagesViewController, CLLocationManagerDelega
             if self.haveAccessLocation() {
                 let locationMediaItem = JSQLocationMediaItem(location: self.locationManager.location!)
                 guard let message = Message(chatRoomId: self.chatRoomId, senderId: self.senderId, senderDisplayName: self.senderDisplayName, date: Date(), locationMediaItem: locationMediaItem!) else { return }
-                message.sendMessageTo(membersIdToPush: self.membersIdToPush)
+                self.messageService.send(message: message, to: self.membersIdToPush)
             }
         }
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
@@ -120,8 +133,8 @@ class ChattingViewController: JSQMessagesViewController, CLLocationManagerDelega
     
     override func didPressSend(_ button: UIButton!, withMessageText text: String!, senderId: String!, senderDisplayName: String!, date: Date!) {
         if text.trimmingCharacters(in: .whitespacesAndNewlines) != "" {
-            let message = Message(chatRoomId: chatRoomId, senderId: senderId, senderDisplayName: senderDisplayName, date: date, text: text)
-            message!.sendMessageTo(membersIdToPush: membersIdToPush)
+            guard let message = Message(chatRoomId: chatRoomId, senderId: senderId, senderDisplayName: senderDisplayName, date: date, text: text) else { return }
+            messageService.send(message: message, to: self.membersIdToPush)
             self.updateSendButton(isEnable: false)
         } else {
             let audioVC = IQAudioRecorderViewController()
@@ -337,6 +350,8 @@ class ChattingViewController: JSQMessagesViewController, CLLocationManagerDelega
     }
     
     @objc func backBarButtonPressed(_ sender: Any) {
+        recentService.resetRecentCounterBy(userId: self.senderId)
+        
         removeListeners()
         self.navigationController?.popViewController(animated: true)
     }
@@ -375,7 +390,7 @@ class ChattingViewController: JSQMessagesViewController, CLLocationManagerDelega
             for document in snapshot.documents {
                 let messageDict = document.data()
                 if let message = Message(messageDict) {
-                    message.loadJSQMediaItem(membersId: self.membersIdToPush) { (success) in
+                    self.messageService.loadJSQMediaItemOf(message: message, membersId: self.membersIdToPush) { (success) in
                         if success {
                             DispatchQueue.main.async {
                                 self.collectionView.reloadData()
@@ -424,7 +439,7 @@ class ChattingViewController: JSQMessagesViewController, CLLocationManagerDelega
         var count = 0
         while self.loadedMessages.count > 0 &&  count < kMESSAGE_NUM_DEFAULT_LOAD_ON_SCREEN {
             let message = self.loadedMessages.popLast()!
-            message.loadJSQMediaItem(membersId: self.membersIdToPush) { (success) in
+            messageService.loadJSQMediaItemOf(message: message, membersId: self.membersIdToPush) { (success) in
                 if success {
                     DispatchQueue.main.async {
                         self.collectionView.reloadData()
@@ -453,7 +468,7 @@ class ChattingViewController: JSQMessagesViewController, CLLocationManagerDelega
                 let messageDict = diff.document.data()
                 if let message = Message(messageDict) {
                     if diff.type == .added {
-                        message.loadJSQMediaItem(membersId: self.membersIdToPush) { (success) in
+                        self.messageService.loadJSQMediaItemOf(message: message, membersId: self.membersIdToPush) { (success) in
                             if success {
                                 DispatchQueue.main.async {
                                     self.collectionView.reloadData()
@@ -539,7 +554,7 @@ extension ChattingViewController: UIImagePickerControllerDelegate, UINavigationC
             storageService.uploadPhotoImageToFirestore(resizedImage, senderId: senderId, chatRoomId: chatRoomId, view: self.view) { (imageUrl) in
                 guard let imageUrl = imageUrl else { return }
                 if let message = Message(chatRoomId: self.chatRoomId, senderId: self.senderId, senderDisplayName: self.senderDisplayName, date: Date(), mediaURL: imageUrl,  type: .photo) {
-                    message.sendMessageTo(membersIdToPush: self.membersIdToPush)
+                    self.messageService.send(message: message, to: self.membersIdToPush)
                 }
             }
         } else if let video = info[.mediaURL] as? NSURL {
@@ -548,7 +563,7 @@ extension ChattingViewController: UIImagePickerControllerDelegate, UINavigationC
             storageService.uploadVideoToFirestore(videoData, senderId: senderId, chatRoomId: chatRoomId, view: self.view) { (videoUrl) in
                 guard let videoUrl = videoUrl else { return }
                 if let message = Message(chatRoomId: self.chatRoomId, senderId: self.senderId, senderDisplayName: self.senderDisplayName, date: Date(), mediaURL: videoUrl, type: .video) {
-                    message.sendMessageTo(membersIdToPush: self.membersIdToPush)
+                    self.messageService.send(message: message, to: self.membersIdToPush)
                 }
             }
         }
@@ -567,7 +582,7 @@ extension ChattingViewController: IQAudioRecorderViewControllerDelegate {
         storageService.uploadAudioToFirestore(audioData, senderId: senderId, chatRoomId: chatRoomId, view: self.view) { (audioUrl) in
             guard let audioUrl = audioUrl else { return }
             if let message = Message(chatRoomId: self.chatRoomId, senderId: self.senderId, senderDisplayName: self.senderDisplayName, date: Date(), mediaURL: audioUrl, type: .audio) {
-                message.sendMessageTo(membersIdToPush: self.membersIdToPush)
+                self.messageService.send(message: message, to: self.membersIdToPush)
             }
         }
     }

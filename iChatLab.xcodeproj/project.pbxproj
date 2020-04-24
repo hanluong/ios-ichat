@@ -17,6 +17,8 @@
 		984CC662241AFB9100933D4C /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984CC661241AFB9100933D4C /* User.swift */; };
 		984CC664241B008300933D4C /* DatabaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984CC663241B008300933D4C /* DatabaseService.swift */; };
 		984CC666241B0B6500933D4C /* Date+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984CC665241B0B6500933D4C /* Date+Ext.swift */; };
+		984CDE1E245298C2007D1A40 /* CloudFirestoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984CDE1D245298C2007D1A40 /* CloudFirestoreService.swift */; };
+		984CDE202452B239007D1A40 /* RecentService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984CDE1F2452B239007D1A40 /* RecentService.swift */; };
 		984CE0B1241C8B8C0057AC92 /* Notification+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984CE0B0241C8B8C0057AC92 /* Notification+Ext.swift */; };
 		984D615C2429AE3D00320762 /* Recent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984D615B2429AE3D00320762 /* Recent.swift */; };
 		984E183A2451F58500E11389 /* PhotosMediaCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984E18392451F58500E11389 /* PhotosMediaCollectionViewController.swift */; };
@@ -61,6 +63,8 @@
 		984CC661241AFB9100933D4C /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		984CC663241B008300933D4C /* DatabaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseService.swift; sourceTree = "<group>"; };
 		984CC665241B0B6500933D4C /* Date+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Ext.swift"; sourceTree = "<group>"; };
+		984CDE1D245298C2007D1A40 /* CloudFirestoreService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudFirestoreService.swift; sourceTree = "<group>"; };
+		984CDE1F2452B239007D1A40 /* RecentService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentService.swift; sourceTree = "<group>"; };
 		984CE0B0241C8B8C0057AC92 /* Notification+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+Ext.swift"; sourceTree = "<group>"; };
 		984D615B2429AE3D00320762 /* Recent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recent.swift; sourceTree = "<group>"; };
 		984E18392451F58500E11389 /* PhotosMediaCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosMediaCollectionViewController.swift; sourceTree = "<group>"; };
@@ -141,9 +145,11 @@
 		985282A1241A2B57008CA4B3 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				984CDE1D245298C2007D1A40 /* CloudFirestoreService.swift */,
 				984CC663241B008300933D4C /* DatabaseService.swift */,
 				984A223C244AC22300469025 /* StorageService.swift */,
 				9851F15F244C049D00E20A84 /* MessageService.swift */,
+				984CDE1F2452B239007D1A40 /* RecentService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -395,6 +401,7 @@
 				984E3BB62424657600E68502 /* ViewPresenter.swift in Sources */,
 				98C24EAC2419E627005C2D88 /* RegisterViewController.swift in Sources */,
 				984A223B244ABD0500469025 /* JSQMessagesViewController+Ext.swift in Sources */,
+				984CDE202452B239007D1A40 /* RecentService.swift in Sources */,
 				988BBE152437C52400E49B4B /* Message.swift in Sources */,
 				984CE0B1241C8B8C0057AC92 /* Notification+Ext.swift in Sources */,
 				984E4BAE242B38960061F3F1 /* CallViewController.swift in Sources */,
@@ -411,6 +418,7 @@
 				984E183C2451F5AB00E11389 /* PhotoMediaItemCollectionViewCell.swift in Sources */,
 				984CC662241AFB9100933D4C /* User.swift in Sources */,
 				984C1D5124237D2900062791 /* RecentsViewController.swift in Sources */,
+				984CDE1E245298C2007D1A40 /* CloudFirestoreService.swift in Sources */,
 				984A991524285A9E00FDB301 /* ProfileTableViewController.swift in Sources */,
 				984CC666241B0B6500933D4C /* Date+Ext.swift in Sources */,
 			);

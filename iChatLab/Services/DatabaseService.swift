@@ -9,19 +9,6 @@
 import Foundation
 import Firebase
 
-enum FCollectionReference: String {
-    case User
-    case Typing
-    case Recent
-    case Message
-    case Group
-    case Call
-}
-
-func reference(_ collectionReference: FCollectionReference) -> CollectionReference {
-    return Firestore.firestore().collection(collectionReference.rawValue)
-}
-
 class DatabaseService {
     static let instance = DatabaseService()
     

@@ -24,9 +24,26 @@ class MessageService {
         }
         
         // Update last message in Recent database
-        recentService.updateLastMessageBy(chatRoomId: message.chatRoomId, text: message.text)
+        recentService.setLastRecentMessage(message)
         
         // TODO: push notification to users
+    }
+    
+    func delete(message: Message, to membersIdToPush: [String], completion: @escaping (_ finished: Bool) -> Void) {
+        var counter = 0
+        for memeberId in membersIdToPush {
+            counter += 1
+            reference(.Message).document(memeberId).collection(message.chatRoomId).document(message.id).delete { (error) in
+                if let error = error {
+                    print("ERROR! Delete message: \(error.localizedDescription)")
+                    completion(false)
+                    return
+                }
+            }
+            if counter == membersIdToPush.count {
+                completion(true)
+            }
+        }
     }
     
     /*

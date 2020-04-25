@@ -60,6 +60,7 @@ class ChattingViewController: JSQMessagesViewController, CLLocationManagerDelega
         
         self.senderId = dbService.currentUserId()
         self.senderDisplayName = dbService.currentUser()!.firstName
+        JSQMessagesCollectionViewCell.registerMenuAction(#selector(delete))
         
         loadUsers { (success) in
             if success {
@@ -81,7 +82,7 @@ class ChattingViewController: JSQMessagesViewController, CLLocationManagerDelega
     
     
     
-    // MARK: - Implement chatting
+    // MARK: - Implement chatting JSQMessageViewController
     
     override func didPressAccessoryButton(_ sender: UIButton!) {
         let menuOptions = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
@@ -234,6 +235,45 @@ class ChattingViewController: JSQMessagesViewController, CLLocationManagerDelega
             self.navigationController?.pushViewController(mapVC, animated: true)
         default:
             print("WARRING! - didTapMessageBubbleAt - Unknown Message Type was tapped")
+        }
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, canPerformAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
+        let message = self.messages[indexPath.row]
+        if action.description == "delete:" && message.senderId == dbService.currentUserId() {
+            return true
+        } else if action.description == "copy:" && !message.isMediaMessage {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    override func collectionView(_ collectionView: JSQMessagesCollectionView!, didDeleteMessageAt indexPath: IndexPath!) {
+        let message = self.messages[indexPath.row]
+        let lastMessage = self.messages.last!
+        
+        // update last recent
+        if message.id == lastMessage.id {
+            if self.messages.count == 1  {
+                self.recentService.deleteRecentBy(chatRoomId: message.chatRoomId)
+            } else {
+                let newLastMessage = self.messages[self.messages.count - 2]
+                self.recentService.updateLastRecentMessage(newLastMessage)
+            }
+        }
+        
+        messageService.delete(message: message, to: self.membersIdToPush) { (finished) in
+            if finished {
+                DispatchQueue.main.async {
+                    self.messages.remove(at: indexPath.row)
+                    self.collectionView.reloadData()
+                }
+            }
         }
     }
     
